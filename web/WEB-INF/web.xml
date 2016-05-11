@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <servlet>
+        <servlet-name>BunnyREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.rest.BunnyREST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PlayerRest</servlet-name>
+        <servlet-class>com.eweware.fluffle.rest.PlayerREST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>StoreREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.rest.StoreREST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>TossREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.rest.TossREST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>CatchREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.rest.CatchREST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>BunnyBreedREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.rest.BunnyBreedREST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>GameREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.rest.GameREST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LoginREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.rest.LoginREST</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>LogoutREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.rest.LogoutREST</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>BunnyREST</servlet-name>
+        <url-pattern>/api/v1/bunny</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CatchREST</servlet-name>
+        <url-pattern>/api/v1/catch</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>PlayerRest</servlet-name>
+        <url-pattern>/api/v1/player</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>StoreREST</servlet-name>
+        <url-pattern>/api/v1/store</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>TossREST</servlet-name>
+        <url-pattern>/api/v1/toss</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>BunnyBreedREST</servlet-name>
+        <url-pattern>/api/v1/admin/breed</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>GameREST</servlet-name>
+        <url-pattern>/api/v1/game</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>LoginREST</servlet-name>
+        <url-pattern>/api/v1/login</url-pattern>
+    </servlet-mapping>
+    
+    <servlet-mapping>
+        <servlet-name>LogoutREST</servlet-name>
+        <url-pattern>/api/v1/logout</url-pattern>
+    </servlet-mapping>
+
+    <!-- listeners and filters -->
+    <listener>
+        <listener-class>com.eweware.fluffle.FluffleServerListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>ObjectifyFilter</filter-name>
+        <filter-class>com.googlecode.objectify.ObjectifyFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ObjectifyFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+</web-app>
