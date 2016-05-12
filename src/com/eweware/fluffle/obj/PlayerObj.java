@@ -27,6 +27,9 @@ public class PlayerObj {
     public Boolean isAdmin;
     public int totalBunnies;
     public int totalCarrotsFed;
-    public DateTime lastAwarddate;
+    public DateTime lastAwardDate;
     public List<DateTime> RepeatPlayList;
+    public int carrotCount;
+
+
 }
