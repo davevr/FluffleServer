@@ -3,6 +3,8 @@ package com.eweware.fluffle.api;
 import com.eweware.fluffle.obj.*;
 import com.googlecode.objectify.Key;
 
+import java.util.List;
+
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
@@ -25,7 +27,7 @@ public class BunnyBreedAPI {
             totalChoices += curColor.rarity;
         }
 
-        int choice = GameObj.rnd.nextInt(totalChoices);
+        int choice = GameAPI.Rnd().nextInt(totalChoices);
         int curLevel = 0;
 
         for (FurColorRecord curColor : theBreed.possibleFurColors) {
@@ -48,7 +50,7 @@ public class BunnyBreedAPI {
             totalChoices += curColor.rarity;
         }
 
-        int choice = GameObj.rnd.nextInt(totalChoices);
+        int choice = GameAPI.Rnd().nextInt(totalChoices);
         int curLevel = 0;
 
         for (EyeColorRecord curColor : theBreed.possibleEyeColors) {
@@ -60,5 +62,23 @@ public class BunnyBreedAPI {
         }
 
         return newColor;
+    }
+
+    public static void AddEyeColor (BunnyBreedObj theBreed, BunnyEyeColorObj newColor, int newChance) {
+        EyeColorRecord newRec = new EyeColorRecord();
+        newRec.EyeColorID = newColor.id;
+        newRec.rarity = newChance;
+        theBreed.possibleEyeColors.add(newRec);
+    }
+
+    public static void AddFurColor (BunnyBreedObj theBreed, BunnyFurColorObj newColor, int newChance) {
+        FurColorRecord newRec = new FurColorRecord();
+        newRec.FurColorID = newColor.id;
+        newRec.rarity = newChance;
+        theBreed.possibleFurColors.add(newRec);
+    }
+
+    public static List<BunnyBreedObj> FetchAll() {
+        return ofy().load().type(BunnyBreedObj.class).list();
     }
 }

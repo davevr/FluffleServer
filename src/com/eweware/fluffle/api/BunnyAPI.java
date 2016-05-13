@@ -9,6 +9,7 @@ import org.joda.time.Period;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
@@ -23,7 +24,7 @@ public class BunnyAPI {
 
 
     public static int CarrotsForNextSize(int curSize) {
-        return GameObj.GrowthStages.get(curSize);
+        return GameAPI.getGrowthStage(curSize);
     }
 
     public static Boolean FeedBunny(BunnyObj theBuns) {
@@ -87,6 +88,8 @@ public class BunnyAPI {
 
         newBuns.Price = (int)(basePrice / totalChance);
 
+        ofy().save().entity(newBuns).now();
+
         return newBuns;
     }
 
@@ -95,13 +98,13 @@ public class BunnyAPI {
         BunnyObj babyBuns = null;
 
         if (BunniesCanBreed(momBuns,dadBuns)) {
-            if (GameObj.rnd.nextInt(100) < GameObj.kBreedChance) {
+            if (GameAPI.Rnd().nextInt(100) < GameAPI.getBreedChance()) {
                 // breed them!
                 babyBuns = new BunnyObj();
                 babyBuns.BreedID = momBuns.BreedID;
                 babyBuns.BreedName = momBuns.BreedName;
 
-                if (GameObj.rnd.nextInt (10) < 5) {
+                if (GameAPI.Rnd().nextInt (10) < 5) {
                     babyBuns.FurColorID = momBuns.FurColorID;
                     babyBuns.FurColorName = momBuns.FurColorName;
                 }
@@ -110,7 +113,7 @@ public class BunnyAPI {
                     babyBuns.FurColorName = dadBuns.FurColorName;
                 }
 
-                if (GameObj.rnd.nextInt (10) < 5) {
+                if (GameAPI.Rnd().nextInt (10) < 5) {
                     babyBuns.EyeColorID = momBuns.EyeColorID;
                     babyBuns.EyeColorName = momBuns.EyeColorName;
                 }
@@ -119,7 +122,7 @@ public class BunnyAPI {
                     babyBuns.EyeColorName = dadBuns.EyeColorName;
                 }
 
-                if (GameObj.rnd.nextInt (10) < 5)
+                if (GameAPI.Rnd().nextInt (10) < 5)
                     babyBuns.Female = true;
                 else
                     babyBuns.Female = false;
@@ -137,7 +140,9 @@ public class BunnyAPI {
                 dadBuns.LastBred = new DateTime();
 
                 // todo - save all bunnies in objectify
-
+                Save(momBuns);
+                Save(dadBuns);
+                Save(babyBuns);
             }
         }
 
@@ -177,6 +182,14 @@ public class BunnyAPI {
         final BunnyObj foundItem = ofy().load().key(Key.create(BunnyObj.class, theId)).now();
 
         return foundItem;
+    }
+
+    public static void Save(BunnyObj theBuns) {
+        ofy().save().entity(theBuns).now();
+    }
+
+    public static List<BunnyObj> FetchBunniesByOwner(long ownerId) {
+        return ofy().load().type(BunnyObj.class).filter("CurrentOwner =", ownerId).list();
     }
 
 }

@@ -3,6 +3,8 @@ package com.eweware.fluffle.api;
 import com.eweware.fluffle.obj.BunnyFurColorObj;
 import com.googlecode.objectify.Key;
 
+import java.util.List;
+
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
@@ -14,5 +16,9 @@ public class BunnyFurColorAPI {
         final BunnyFurColorObj foundItem = ofy().load().key(Key.create(BunnyFurColorObj.class, theId)).now();
 
         return foundItem;
+    }
+
+    public static List<BunnyFurColorObj> FetchAll() {
+        return ofy().load().type(BunnyFurColorObj.class).list();
     }
 }

@@ -7,6 +7,7 @@ import com.googlecode.objectify.ObjectifyService;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import com.eweware.fluffle.obj.*;
+import com.googlecode.objectify.impl.translate.opt.joda.JodaTimeTranslators;
 
 /**
  * Created by davidvronay on 5/10/16.
@@ -16,6 +17,7 @@ public class FluffleServerListener implements ServletContextListener {
 
     public void contextInitialized(ServletContextEvent event) {
         // register our classes
+        JodaTimeTranslators.add(ObjectifyService.factory());
         ObjectifyService.register(EyeColorRecord.class);
         ObjectifyService.register(FurColorRecord.class);
         ObjectifyService.register(BunnyEyeColorObj.class);

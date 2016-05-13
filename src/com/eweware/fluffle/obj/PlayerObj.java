@@ -1,9 +1,6 @@
 package com.eweware.fluffle.obj;
 
-import com.googlecode.objectify.annotation.Id;
-import com.googlecode.objectify.annotation.Entity;
-import com.googlecode.objectify.annotation.Index;
-import com.googlecode.objectify.annotation.Unindex;
+import com.googlecode.objectify.annotation.*;
 import org.joda.time.DateTime;
 
 import java.util.Date;
@@ -30,6 +27,6 @@ public class PlayerObj {
     public DateTime lastAwardDate;
     public List<DateTime> RepeatPlayList;
     public int carrotCount;
-
+    @Ignore List<BunnyObj> Bunnies;
 
 }

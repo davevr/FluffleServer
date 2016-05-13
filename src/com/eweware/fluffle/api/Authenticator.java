@@ -133,15 +133,13 @@ public class Authenticator {
     }
 
     public static PlayerObj CreateNewUserNoPassword(HttpSession session) {
-        PlayerObj newUser = new PlayerObj();
-        newUser.signedOn = true;
-        newUser.lastActiveDate = new DateTime();
+        PlayerObj newUser = PlayerAPI.CreateInstance();
         newUser.creationDate = new DateTime();
 
         ofy().save().entity(newUser).now();
         session.setAttribute(USERID, newUser.id);
 
-        String username = "Player" + newUser.id.toString();
+        String username = "player" + newUser.id.toString();
         newUser.username = username;
         String password = username;
         try {
