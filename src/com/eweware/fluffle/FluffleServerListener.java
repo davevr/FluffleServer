@@ -7,13 +7,17 @@ import com.googlecode.objectify.ObjectifyService;
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import com.eweware.fluffle.obj.*;
+import com.googlecode.objectify.Work;
 import com.googlecode.objectify.impl.translate.opt.joda.JodaTimeTranslators;
+
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by davidvronay on 5/10/16.
  */
 public class FluffleServerListener implements ServletContextListener {
-
+    private static final Logger log = Logger.getLogger(FluffleServerListener.class.getName());
 
     public void contextInitialized(ServletContextEvent event) {
         // register our classes
@@ -26,12 +30,24 @@ public class FluffleServerListener implements ServletContextListener {
 
         ObjectifyService.register(BunnyObj.class);
 
-        //ObjectifyService.register(GameObj.class);
+        ObjectifyService.register(GameObj.class);
         ObjectifyService.register(PlayerObj.class);
         ObjectifyService.register(TossObj.class);
 
         // Init our Game
-        GameAPI.Initialize();
+        try {
+            ObjectifyService.run(new Work<Void>() {
+                @Override
+                public Void run() {
+                    GameAPI.Initialize();
+                    return null;
+                }
+            });
+
+        }
+        catch (Exception exp) {
+            log.log(Level.SEVERE, exp.getMessage());
+        }
 
     }
 

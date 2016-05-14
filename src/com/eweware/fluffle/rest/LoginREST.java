@@ -2,9 +2,6 @@ package com.eweware.fluffle.rest;
 
 import com.eweware.fluffle.api.Authenticator;
 import com.eweware.fluffle.obj.PlayerObj;
-import com.google.appengine.repackaged.com.google.api.client.http.HttpStatusCodes;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -29,15 +26,14 @@ public class LoginREST extends HttpServlet {
         }
 
         if (thePlayer != null) {
-            response.setStatus(HttpStatusCodes.STATUS_CODE_OK);
+            response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
-            Gson gson = new GsonBuilder().create();
-            gson.toJson(thePlayer, out);
+            RestUtils.get_gson().toJson(thePlayer, out);
             out.flush();
             out.close();
         } else {
-            response.setStatus(HttpStatusCodes.STATUS_CODE_UNAUTHORIZED);
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
     }
 
