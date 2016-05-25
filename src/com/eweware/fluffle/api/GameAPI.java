@@ -83,12 +83,14 @@ public class GameAPI {
             BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(1), 400);
             BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(2), 100);
             BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(3), 10);
+            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(4), 50);
 
             newBreed.possibleFurColors = new ArrayList<>();
             BunnyBreedAPI.AddFurColor(newBreed, furColors.get(0), 500);
             BunnyBreedAPI.AddFurColor(newBreed, furColors.get(1), 500);
             BunnyBreedAPI.AddFurColor(newBreed, furColors.get(2), 100);
             BunnyBreedAPI.AddFurColor(newBreed, furColors.get(3), 100);
+            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(4), 50);
             ofy().save().entity(newBreed);
 
             newBreed = new BunnyBreedObj();
@@ -99,12 +101,14 @@ public class GameAPI {
             BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(1), 400);
             BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(2), 100);
             BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(3), 10);
+            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(4), 50);
 
             newBreed.possibleFurColors = new ArrayList<>();
             BunnyBreedAPI.AddFurColor(newBreed, furColors.get(0), 500);
             BunnyBreedAPI.AddFurColor(newBreed, furColors.get(1), 500);
             BunnyBreedAPI.AddFurColor(newBreed, furColors.get(2), 100);
             BunnyBreedAPI.AddFurColor(newBreed, furColors.get(3), 100);
+            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(4), 50);
             ofy().save().entity(newBreed);
 
             newBreed = new BunnyBreedObj();
@@ -115,12 +119,14 @@ public class GameAPI {
             BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(1), 400);
             BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(2), 100);
             BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(3), 10);
+            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(4), 50);
 
             newBreed.possibleFurColors = new ArrayList<>();
             BunnyBreedAPI.AddFurColor(newBreed, furColors.get(0), 500);
             BunnyBreedAPI.AddFurColor(newBreed, furColors.get(1), 500);
             BunnyBreedAPI.AddFurColor(newBreed, furColors.get(2), 100);
             BunnyBreedAPI.AddFurColor(newBreed, furColors.get(3), 100);
+            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(4), 50);
             ofy().save().entity(newBreed);
         }
 
@@ -145,6 +151,10 @@ public class GameAPI {
             newEyeColor = new BunnyEyeColorObj();
             newEyeColor.ColorName = "Red";
             ofy().save().entity(newEyeColor).now();
+
+            newEyeColor = new BunnyEyeColorObj();
+            newEyeColor.ColorName = "Green";
+            ofy().save().entity(newEyeColor).now();
         }
     }
 
@@ -166,6 +176,10 @@ public class GameAPI {
 
             newFurColor = new BunnyFurColorObj();
             newFurColor.ColorName = "White";
+            ofy().save().entity(newFurColor).now();
+
+            newFurColor = new BunnyFurColorObj();
+            newFurColor.ColorName = "Gray";
             ofy().save().entity(newFurColor).now();
         }
     }

@@ -10,19 +10,19 @@
     <cron>
         <url>/api/v1/dailybreed</url>
         <description>every day, breed bunnies</description>
-        <schedule>every day</schedule>
+        <schedule>every 24 hours</schedule>
     </cron>
 
     <cron>
         <url>/api/v1/dailystarve</url>
         <description>every day, starve bunnies</description>
-        <schedule>every day</schedule>
+        <schedule>every 24 hours</schedule>
     </cron>
 
     <cron>
         <url>/api/v1/updatestore</url>
         <description>every hour, new bunnies in store</description>
-        <schedule>every hour</schedule>
+        <schedule>every 1 hours</schedule>
     </cron>
 
 </cronentries>
