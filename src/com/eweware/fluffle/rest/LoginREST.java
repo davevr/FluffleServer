@@ -1,6 +1,7 @@
 package com.eweware.fluffle.rest;
 
 import com.eweware.fluffle.api.Authenticator;
+import com.eweware.fluffle.api.BunnyAPI;
 import com.eweware.fluffle.obj.PlayerObj;
 
 import javax.servlet.ServletException;
@@ -26,6 +27,7 @@ public class LoginREST extends HttpServlet {
         }
 
         if (thePlayer != null) {
+            thePlayer.Bunnies = BunnyAPI.FetchBunniesByOwner(thePlayer.id);
             response.setStatus(HttpServletResponse.SC_OK);
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();

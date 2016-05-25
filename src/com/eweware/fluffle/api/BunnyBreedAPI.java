@@ -64,6 +64,40 @@ public class BunnyBreedAPI {
         return newColor;
     }
 
+    public static double GetEyeColorChance(long breedId, long eyecolorId) {
+        BunnyBreedObj newBreed = FetchById(breedId);
+
+        int totalChoices = 0;
+
+        for (EyeColorRecord curColor : newBreed.possibleEyeColors) {
+            totalChoices += curColor.rarity;
+        }
+
+        for (EyeColorRecord curColor : newBreed.possibleEyeColors) {
+            if (curColor.EyeColorID == eyecolorId) {
+                return (double) curColor.rarity / (double) totalChoices;
+            }
+        }
+        return 1L;
+    }
+
+    public static double GetFurColorChance(long breedId, long furColorId) {
+        BunnyBreedObj newBreed = FetchById(breedId);
+
+        int totalChoices = 0;
+
+        for (FurColorRecord curColor : newBreed.possibleFurColors) {
+            totalChoices += curColor.rarity;
+        }
+
+        for (FurColorRecord curColor : newBreed.possibleFurColors) {
+            if (curColor.FurColorID == furColorId) {
+                return (double) curColor.rarity / (double) totalChoices;
+            }
+        }
+        return 1L;
+    }
+
     public static void AddEyeColor (BunnyBreedObj theBreed, BunnyEyeColorObj newColor, int newChance) {
         EyeColorRecord newRec = new EyeColorRecord();
         newRec.EyeColorID = newColor.id;

@@ -38,6 +38,10 @@ public class GameAPI {
         return curGame.BreedChance;
     }
 
+    public static List<Integer> getGrowthStages() {
+        return curGame.GrowthStages;
+    }
+
     public static int getGrowthStage(int curSize) {
         return curGame.GrowthStages.get(curSize);
     }
@@ -188,6 +192,7 @@ public class GameAPI {
         return today;
     }
 
+
     public static BunnyBreedObj GetRandomBreed() {
         BunnyBreedObj newBreed = null;
 
@@ -209,5 +214,22 @@ public class GameAPI {
         }
 
         return newBreed;
+    }
+
+    public static double GetBreedChance(long breedId) {
+        BunnyBreedObj newBreed = null;
+
+        int totalChoices = 0;
+
+        for (BunnyBreedObj curBreed : curGame.BunnyBreeds) {
+            totalChoices += curBreed.rarity;
+        }
+
+        for (BunnyBreedObj curBreed : curGame.BunnyBreeds) {
+            if (curBreed.id == breedId) {
+                return (double) curBreed.rarity / (double) totalChoices;
+            }
+        }
+        return 1L;
     }
 }

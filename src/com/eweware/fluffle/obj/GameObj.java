@@ -26,6 +26,9 @@ public class GameObj {
     @Ignore
     public List<BunnyBreedObj> BunnyBreeds;
 
+    @Ignore
+    public List<BunnyObj> Store;
+
     public int StartingCarrots;
 
     @Ignore

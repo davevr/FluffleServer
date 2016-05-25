@@ -35,7 +35,8 @@ public class BunnyAPI {
             theBuns.BunnySize++;
             leveledUp = true;
         }
-        theBuns.LastFeedDate = GameAPI.getToday();
+        theBuns.LastFeedDate = new DateTime();
+        ofy().save().entity(theBuns).now();
         return leveledUp;
     }
 
@@ -43,6 +44,7 @@ public class BunnyAPI {
         theBuns.FeedState -= numDays;
         if (theBuns.FeedState < 0)
             theBuns.FeedState = 0;
+        ofy().save().entity(theBuns).now();
     }
 
     public static int getTotalCarrots(BunnyObj theBuns) {
@@ -71,6 +73,10 @@ public class BunnyAPI {
         double totalChance = 1;
         double curChance = 1;
 
+        newBuns.CurrentOwner = 0L;
+        newBuns.OriginalOwner = 0L;
+        newBuns.Female = GameAPI.Rnd().nextBoolean();
+
         BunnyBreedObj newBreed = GameAPI.GetRandomBreed();
         newBuns.BreedID = newBreed.id;
         newBuns.BreedName = newBreed.BreedName;
@@ -84,15 +90,25 @@ public class BunnyAPI {
         BunnyFurColorObj newFurColor = BunnyBreedAPI.GetRandomFurColor(newBreed);
         newBuns.FurColorID = newFurColor.id;
         newBuns.FurColorName = newFurColor.ColorName;
-        totalChance *= curChance;
+        totalChance = GetBunnyRareness(newBuns);
 
         newBuns.Price = (int)(basePrice / totalChance);
-
+        newBuns.BunnySize = 1;
         ofy().save().entity(newBuns).now();
 
         return newBuns;
     }
 
+    public static double GetBunnyRareness(BunnyObj newBuns) {
+        double totalChance = 1;
+        double curChance;
+
+        totalChance *= GameAPI.GetBreedChance(newBuns.BreedID);
+        totalChance *= BunnyBreedAPI.GetEyeColorChance(newBuns.BreedID, newBuns.EyeColorID);
+        totalChance *= BunnyBreedAPI.GetFurColorChance(newBuns.BreedID, newBuns.FurColorID);
+
+        return totalChance;
+    }
 
     public static BunnyObj BreedBunnies(BunnyObj momBuns, BunnyObj dadBuns) {
         BunnyObj babyBuns = null;
@@ -138,6 +154,7 @@ public class BunnyAPI {
                 // todo: make today's date
                 momBuns.LastBred = new DateTime();
                 dadBuns.LastBred = new DateTime();
+                babyBuns.BunnySize = 1;
 
                 // todo - save all bunnies in objectify
                 Save(momBuns);
@@ -183,6 +200,7 @@ public class BunnyAPI {
 
         return foundItem;
     }
+
 
     public static void Save(BunnyObj theBuns) {
         ofy().save().entity(theBuns).now();

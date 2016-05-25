@@ -27,6 +27,6 @@ public class PlayerObj {
     public DateTime lastAwardDate;
     public List<DateTime> RepeatPlayList;
     public int carrotCount;
-    @Ignore List<BunnyObj> Bunnies;
+    @Ignore public List<BunnyObj> Bunnies;
 
 }
