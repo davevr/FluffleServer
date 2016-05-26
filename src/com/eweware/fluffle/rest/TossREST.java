@@ -33,8 +33,12 @@ public class TossREST extends HttpServlet {
 
         if (bunnyStr != null) {
             long bunnyId = Long.parseLong(bunnyStr);
+            int bunnyPrice = 0;
 
-            TossObj newToss = TossAPI.StartToss(currentUserId, bunnyId);
+            if (priceStr != null)
+                bunnyPrice = Integer.parseInt(priceStr);
+
+            TossObj newToss = TossAPI.StartToss(currentUserId, bunnyId, bunnyPrice);
             response.setContentType("application/json");
             response.setStatus(HttpServletResponse.SC_OK);
             PrintWriter out = response.getWriter();
@@ -46,6 +50,26 @@ public class TossREST extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        long currentUserId = Authenticator.CurrentUserId(request.getSession());
 
+        if (currentUserId == 0) {
+            log.log(Level.SEVERE, "logged out user attempting to get toss status");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        String tossIdStr = request.getParameter("tossid");
+
+        if (tossIdStr != null) {
+            long tossId = Long.parseLong(tossIdStr);
+            TossObj newToss = TossAPI.FetchById(tossId);
+            response.setContentType("application/json");
+            response.setStatus(HttpServletResponse.SC_OK);
+            PrintWriter out = response.getWriter();
+            RestUtils.get_gson().toJson(newToss, out);
+            out.flush();
+            out.close();
+
+        }
     }
 }
