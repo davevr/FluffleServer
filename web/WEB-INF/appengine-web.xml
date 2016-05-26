@@ -3,6 +3,9 @@
   <application>fluffle-1306</application>
   <version>1</version>
   <threadsafe>true</threadsafe>
+  <static-files>
+    <include path="/images/**.png"></include>
+  </static-files>
 
   <system-properties>
     <property name="java.util.logging.config.file" value="WEB-INF/logging.properties"/>
