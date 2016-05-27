@@ -210,4 +210,17 @@ public class BunnyAPI {
         return ofy().load().type(BunnyObj.class).filter("CurrentOwner =", ownerId).list();
     }
 
+    public static void RenameBunny(long theBunsId, String newName) {
+        BunnyObj theBuns = FetchById(theBunsId);
+        theBuns.BunnyName = newName;
+        Save(theBuns);
+    }
+
+    public static void UpdateBunnyLoc(long theBunsId, int xLoc, int yLoc) {
+        BunnyObj theBuns = FetchById(theBunsId);
+        theBuns.HorizontalLoc = xLoc;
+        theBuns.VerticalLoc = yLoc;
+        Save(theBuns);
+    }
+
 }

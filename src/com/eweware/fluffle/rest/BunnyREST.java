@@ -11,11 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by davidvronay on 5/10/16.
  */
 public class BunnyREST extends HttpServlet {
+    private static final Logger log = Logger.getLogger(BunnyREST.class.getName());
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
     }
@@ -51,6 +55,38 @@ public class BunnyREST extends HttpServlet {
             }
         } else
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+
+    }
+
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        long currentUserId = Authenticator.CurrentUserId(request.getSession());
+
+        if (currentUserId == 0) {
+            log.log(Level.SEVERE, "logged out user attempting to update bunny");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        String renameStr = request.getParameter("renamebunny");
+        String moveStr = request.getParameter("move");
+
+
+        if (renameStr != null) {
+            long bunnyId = Long.parseLong(renameStr);
+            String newName = request.getParameter("name");
+            BunnyAPI.RenameBunny(bunnyId, newName);
+        }
+
+        if (moveStr != null) {
+            long bunnyId = Long.parseLong(moveStr);
+            String xLocStr = request.getParameter("xloc");
+            String yLocStr = request.getParameter("yloc");
+            int xLoc = Integer.parseInt(xLocStr);
+            int yLoc = Integer.parseInt(yLocStr);
+            BunnyAPI.UpdateBunnyLoc(bunnyId, xLoc, yLoc);
+        }
+
+        response.setStatus(HttpServletResponse.SC_OK);
 
     }
 }

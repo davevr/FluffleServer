@@ -59,5 +59,6 @@ public class PlayerREST extends HttpServlet {
             PlayerAPI.PlayerSoldBunny(currentUserId, bunnyId);
         }
 
+
     }
 }

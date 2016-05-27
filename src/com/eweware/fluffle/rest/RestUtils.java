@@ -1,8 +1,9 @@
 package com.eweware.fluffle.rest;
 
-import com.fatboyindustrial.gsonjodatime.Converters;
+import com.eweware.fluffle.api.gsonUTCDateAdapter;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.joda.time.DateTime;
 
 /**
  * Created by davidvronay on 5/13/16.
@@ -13,7 +14,7 @@ public class RestUtils {
 
     public static Gson get_gson() {
         if (_gson == null) {
-            _gson = Converters.registerDateTime(new GsonBuilder()).create();
+            _gson = new GsonBuilder().registerTypeAdapter(DateTime.class, new gsonUTCDateAdapter()).create();
         }
 
         return _gson;

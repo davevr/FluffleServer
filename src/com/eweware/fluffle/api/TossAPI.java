@@ -7,6 +7,7 @@ import com.eweware.fluffle.obj.TossObj;
 import com.googlecode.objectify.Key;
 import org.joda.time.DateTime;
 import org.joda.time.Interval;
+import org.joda.time.Seconds;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,17 +78,15 @@ public class TossAPI {
             return null;
         }
 
-        /* //todo:  handle expired toss
         DateTime now = new DateTime();
-        Interval elapsedTime = now - theToss.startTossTime;
-        if (elapsedTime > 1 minute) {
+        Seconds elapsed = Seconds.secondsBetween(now, theToss.startTossDate);
+
+        if (elapsed.getSeconds() > 60) {
             theToss.isValid = false;
             ofy().save().entity(theToss).now();
             log.log(Level.WARNING, "Toss has expired");
             return null;
         }
-
-        */
 
         BunnyObj theBuns = BunnyAPI.FetchById(theToss.bunnyId);
 
