@@ -1,0 +1,22 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="FluffleServer:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/FluffleServer_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="FluffleServer/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="FluffleServer" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="AppEngine API" />
+          <element id="library" level="project" name="commons-codec:commons-codec:Latest" />
+          <element id="library" level="project" name="joda-time:joda-time:Latest" />
+          <element id="library" level="project" name="com.googlecode.objectify:objectify:Latest" />
+          <element id="library" level="project" name="com.google.guava:guava:Latest" />
+          <element id="library" level="project" name="com.google.code.gson:gson:Latest" />
+          <element id="library" level="project" name="com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:Latest" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
