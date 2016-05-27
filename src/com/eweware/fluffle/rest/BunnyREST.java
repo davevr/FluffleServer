@@ -87,6 +87,7 @@ public class BunnyREST extends HttpServlet {
         }
 
         response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json");
 
     }
 }
