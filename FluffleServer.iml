@@ -27,10 +27,10 @@
     <orderEntry type="library" scope="PROVIDED" name="AppEngine Dev 1.9.32" level="application_server_libraries" />
     <orderEntry type="library" name="AppEngine API" level="project" />
     <orderEntry type="library" name="com.google.code.gson:gson:Latest" level="project" />
-    <orderEntry type="library" name="com.googlecode.objectify:objectify:Latest" level="project" />
     <orderEntry type="library" name="commons-codec:commons-codec:Latest" level="project" />
-    <orderEntry type="library" name="joda-time:joda-time:Latest" level="project" />
     <orderEntry type="library" name="com.google.guava:guava:Latest" level="project" />
     <orderEntry type="library" name="com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:Latest" level="project" />
+    <orderEntry type="library" name="com.googlecode.objectify:objectify:Latest" level="project" />
+    <orderEntry type="library" name="joda-time:joda-time:Latest" level="project" />
   </component>
 </module>
