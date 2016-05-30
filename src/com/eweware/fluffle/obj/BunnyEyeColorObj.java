@@ -14,4 +14,15 @@ public class BunnyEyeColorObj {
     @Id
     public Long id;
     public String ColorName;
+    public int rarity;
+
+    public BunnyEyeColorObj(String theColor, int chance) {
+        ColorName = theColor;
+        rarity = chance;
+
+    }
+
+    public BunnyEyeColorObj() {
+
+    }
 }

@@ -10,11 +10,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created by davidvronay on 5/10/16.
  */
 public class LoginREST extends HttpServlet {
+    private static final Logger log = Logger.getLogger(LoginREST.class.getName());
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String userNameStr = request.getParameter("username");
         String passwordStr = request.getParameter("pwd");
@@ -37,6 +41,52 @@ public class LoginREST extends HttpServlet {
         } else {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
         }
+    }
+
+    protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String userNameStr = request.getParameter("username");
+        String passwordStr = request.getParameter("pwd");
+
+        long curUserId = Authenticator.CurrentUserId(request.getSession());
+
+        if (curUserId == 0) {
+            log.log(Level.SEVERE, "Signed out user trying to change username or password");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        if (userNameStr != null) {
+            // change the user's name.  Typically this is only done o
+            boolean didIt = Authenticator.ChangeUserName(curUserId, userNameStr);
+            if (didIt)
+                response.setStatus(HttpServletResponse.SC_OK);
+            else
+                // probably a duplicate
+                response.setStatus(HttpServletResponse.SC_CONFLICT);
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            RestUtils.get_gson().toJson(didIt, out);
+            out.flush();
+            out.close();
+        }
+
+        if (passwordStr != null) {
+            // change the user's name.  Typically this is only done o
+            boolean didIt = Authenticator.ChangePassword(curUserId, passwordStr);
+            if (didIt)
+                response.setStatus(HttpServletResponse.SC_OK);
+            else
+                // something went wrong
+                response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            RestUtils.get_gson().toJson(didIt, out);
+            out.flush();
+            out.close();
+        }
+
+
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

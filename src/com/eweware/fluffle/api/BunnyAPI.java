@@ -10,6 +10,7 @@ import org.joda.time.Period;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Logger;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
@@ -17,6 +18,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
  * Created by davidvronay on 5/10/16.
  */
 public class BunnyAPI {
+    private static final Logger log = Logger.getLogger(BunnyAPI.class.getName());
 
     public static double getProgress(BunnyObj theBuns) {
         return (double)theBuns.FeedState / (double)(CarrotsForNextSize (theBuns.BunnySize));
@@ -71,7 +73,6 @@ public class BunnyAPI {
         BunnyObj newBuns = new BunnyObj ();
         double basePrice = 16;
         double totalChance = 1;
-        double curChance = 1;
 
         newBuns.CurrentOwner = 0L;
         newBuns.OriginalOwner = 0L;
@@ -80,18 +81,16 @@ public class BunnyAPI {
         BunnyBreedObj newBreed = GameAPI.GetRandomBreed();
         newBuns.BreedID = newBreed.id;
         newBuns.BreedName = newBreed.BreedName;
-        totalChance *= curChance;
-
-        BunnyEyeColorObj newEyeColor = BunnyBreedAPI.GetRandomEyeColor(newBreed);
-        newBuns.EyeColorID = newEyeColor.id;
-        newBuns.EyeColorName = newEyeColor.ColorName;
-        totalChance *= curChance;
 
         BunnyFurColorObj newFurColor = BunnyBreedAPI.GetRandomFurColor(newBreed);
         newBuns.FurColorID = newFurColor.id;
         newBuns.FurColorName = newFurColor.ColorName;
-        totalChance = GetBunnyRareness(newBuns);
 
+        BunnyEyeColorObj newEyeColor = BunnyFurColorAPI.GetRandomEyeColor(newFurColor);
+        newBuns.EyeColorID = newEyeColor.id;
+        newBuns.EyeColorName = newEyeColor.ColorName;
+
+        totalChance = GetBunnyRareness(newBuns);
         newBuns.Price = (int)(basePrice / totalChance);
         newBuns.BunnySize = 1;
         ofy().save().entity(newBuns).now();
@@ -104,9 +103,8 @@ public class BunnyAPI {
         double curChance;
 
         totalChance *= GameAPI.GetBreedChance(newBuns.BreedID);
-        totalChance *= BunnyBreedAPI.GetEyeColorChance(newBuns.BreedID, newBuns.EyeColorID);
         totalChance *= BunnyBreedAPI.GetFurColorChance(newBuns.BreedID, newBuns.FurColorID);
-
+        totalChance *= BunnyFurColorAPI.GetEyeColorChance(newBuns.FurColorID, newBuns.EyeColorID);
         return totalChance;
     }
 
@@ -120,6 +118,7 @@ public class BunnyAPI {
                 babyBuns.BreedID = momBuns.BreedID;
                 babyBuns.BreedName = momBuns.BreedName;
 
+                // to do:  check for mutations
                 if (GameAPI.Rnd().nextInt (10) < 5) {
                     babyBuns.FurColorID = momBuns.FurColorID;
                     babyBuns.FurColorName = momBuns.FurColorName;
@@ -151,12 +150,10 @@ public class BunnyAPI {
                     babyBuns.FatherID = momBuns.id;
                 }
 
-                // todo: make today's date
                 momBuns.LastBred = new DateTime();
                 dadBuns.LastBred = new DateTime();
                 babyBuns.BunnySize = 1;
 
-                // todo - save all bunnies in objectify
                 Save(momBuns);
                 Save(dadBuns);
                 Save(babyBuns);

@@ -3,12 +3,10 @@ package com.eweware.fluffle.api;
 import com.eweware.fluffle.obj.*;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
 import org.joda.time.DateTime;
-import org.joda.time.LocalDate;
 
 import static com.googlecode.objectify.ObjectifyService.ofy;
 
@@ -61,8 +59,6 @@ public class GameAPI {
     private static void InitFirstGame() {
         curGame = new GameObj();
         curGame.StartingCarrots = 250;
-        InitEyeColors();
-        InitFurColors();
         InitBunnyBreeds();
         InitGrowthStages();
         ofy().save().entity(curGame).now();
@@ -72,117 +68,92 @@ public class GameAPI {
         curGame.BunnyBreeds = BunnyBreedAPI.FetchAll();
         if (curGame.BunnyBreeds.size() == 0) {
             curGame.BunnyBreeds = new ArrayList<>();
-            List<BunnyEyeColorObj> eyeColors = BunnyEyeColorAPI.FetchAll();
-            List<BunnyFurColorObj> furColors = BunnyFurColorAPI.FetchAll();
+            BunnyFurColorObj newFurColor = null;
 
-            BunnyBreedObj newBreed = new BunnyBreedObj();
-            newBreed.BreedName = "mini lop";
-            newBreed.rarity = 500;
-            newBreed.possibleEyeColors = new ArrayList<>();
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(0), 500);
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(1), 400);
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(2), 100);
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(3), 10);
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(4), 50);
+
+            // mini lop
+            BunnyBreedObj newBreed = new BunnyBreedObj("mini lop", 500);
 
             newBreed.possibleFurColors = new ArrayList<>();
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(0), 500);
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(1), 500);
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(2), 100);
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(3), 100);
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(4), 50);
+            newFurColor = new BunnyFurColorObj("brown", 500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor,"black", 500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "blue", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "red", 50);
+            ofy().save().entity(newFurColor).now();
+            BunnyBreedAPI.AddFurColor(newBreed, newFurColor);
+
+            newFurColor = new BunnyFurColorObj("tan",500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "black", 500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor,"blue", 10);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "brown", 500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor,"green", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "red", 10);
+            ofy().save().entity(newFurColor).now();
+            BunnyBreedAPI.AddFurColor(newBreed, newFurColor);
+
+            newFurColor = new BunnyFurColorObj("white", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "black", 500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "blue", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "green", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "brown", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "red", 100);
+            ofy().save().entity(newFurColor).now();
+            BunnyBreedAPI.AddFurColor(newBreed, newFurColor);
+
             ofy().save().entity(newBreed);
 
-            newBreed = new BunnyBreedObj();
-            newBreed.BreedName = "Holland Lop";
-            newBreed.rarity = 400;
-            newBreed.possibleEyeColors = new ArrayList<>();
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(0), 500);
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(1), 400);
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(2), 100);
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(3), 10);
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(4), 50);
 
-            newBreed.possibleFurColors = new ArrayList<>();
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(0), 500);
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(1), 500);
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(2), 100);
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(3), 100);
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(4), 50);
+            // holland lop
+            newBreed = new BunnyBreedObj("Holland Lop", 1000);
+
+            newFurColor = new BunnyFurColorObj("brown", 500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "black", 500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "blue", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "red", 50);
+            ofy().save().entity(newFurColor).now();
+            BunnyBreedAPI.AddFurColor(newBreed, newFurColor);
+
+            newFurColor = new BunnyFurColorObj("tan",500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "blue", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "green", 100);
+            ofy().save().entity(newFurColor).now();
+            BunnyBreedAPI.AddFurColor(newBreed, newFurColor);
+
             ofy().save().entity(newBreed);
 
-            newBreed = new BunnyBreedObj();
-            newBreed.BreedName = "Flemish Giant";
-            newBreed.rarity = 100;
-            newBreed.possibleEyeColors = new ArrayList<>();
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(0), 500);
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(1), 400);
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(2), 100);
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(3), 10);
-            BunnyBreedAPI.AddEyeColor(newBreed, eyeColors.get(4), 50);
 
-            newBreed.possibleFurColors = new ArrayList<>();
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(0), 500);
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(1), 500);
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(2), 100);
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(3), 100);
-            BunnyBreedAPI.AddFurColor(newBreed, furColors.get(4), 50);
+            // holland lop
+            newBreed = new BunnyBreedObj("Flemish Giant", 100);
+
+            newFurColor = new BunnyFurColorObj("brown", 500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "black", 500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "blue", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "red", 50);
+            ofy().save().entity(newFurColor).now();
+            BunnyBreedAPI.AddFurColor(newBreed, newFurColor);
+
+            newFurColor = new BunnyFurColorObj("black",500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "black", 500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "blue", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "brown", 500);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "green", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "red", 10);
+            ofy().save().entity(newFurColor).now();
+            BunnyBreedAPI.AddFurColor(newBreed, newFurColor);
+
+            newFurColor = new BunnyFurColorObj("gray", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "black", 50);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "blue", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "green", 100);
+            BunnyFurColorAPI.AddNewEyeColor(newFurColor, "red", 100);
+            ofy().save().entity(newFurColor).now();
+            BunnyBreedAPI.AddFurColor(newBreed, newFurColor);
             ofy().save().entity(newBreed);
         }
 
 
     }
 
-    private static void InitEyeColors() {
-        List<BunnyEyeColorObj> eyeColors = BunnyEyeColorAPI.FetchAll();
-        if (eyeColors.size() == 0) {
-            BunnyEyeColorObj newEyeColor = new BunnyEyeColorObj();
-            newEyeColor.ColorName = "Brown";
-            ofy().save().entity(newEyeColor).now();
-
-            newEyeColor = new BunnyEyeColorObj();
-            newEyeColor.ColorName = "Black";
-            ofy().save().entity(newEyeColor).now();
-
-            newEyeColor = new BunnyEyeColorObj();
-            newEyeColor.ColorName = "Blue";
-            ofy().save().entity(newEyeColor).now();
-
-            newEyeColor = new BunnyEyeColorObj();
-            newEyeColor.ColorName = "Red";
-            ofy().save().entity(newEyeColor).now();
-
-            newEyeColor = new BunnyEyeColorObj();
-            newEyeColor.ColorName = "Green";
-            ofy().save().entity(newEyeColor).now();
-        }
-    }
-
-    private static void InitFurColors() {
-
-        List<BunnyFurColorObj> furColors = BunnyFurColorAPI.FetchAll();
-        if (furColors.size() == 0) {
-            BunnyFurColorObj newFurColor = new BunnyFurColorObj();
-            newFurColor.ColorName = "Brown";
-            ofy().save().entity(newFurColor).now();
-
-            newFurColor = new BunnyFurColorObj();
-            newFurColor.ColorName = "Tan";
-            ofy().save().entity(newFurColor).now();
-
-            newFurColor = new BunnyFurColorObj();
-            newFurColor.ColorName = "Black";
-            ofy().save().entity(newFurColor).now();
-
-            newFurColor = new BunnyFurColorObj();
-            newFurColor.ColorName = "White";
-            ofy().save().entity(newFurColor).now();
-
-            newFurColor = new BunnyFurColorObj();
-            newFurColor.ColorName = "Gray";
-            ofy().save().entity(newFurColor).now();
-        }
-    }
 
 
     private static void InitGrowthStages() {

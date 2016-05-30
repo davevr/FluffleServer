@@ -17,8 +17,14 @@ public class BunnyBreedObj {
     public Long id;
     public String BreedName;
     public int rarity;
-    public List<FurColorRecord> possibleFurColors;
-    public List<EyeColorRecord> possibleEyeColors;
+    public List<BunnyFurColorObj> possibleFurColors;
 
 
+    public BunnyBreedObj() {
+    }
+
+    public BunnyBreedObj(String theName, int theChance) {
+        BreedName = theName;
+        rarity = theChance;
+    }
 }

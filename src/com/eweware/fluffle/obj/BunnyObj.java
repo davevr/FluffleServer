@@ -37,6 +37,7 @@ public class BunnyObj {
     public int FeedState;
     public int Price;
     public DateTime LastBred;
+    public Boolean inPark;
 
 
 

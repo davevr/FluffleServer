@@ -132,6 +132,51 @@ public class Authenticator {
         }
     }
 
+    public static boolean ChangeUserName(long userId, String newUserName) {
+        boolean didIt = false;
+
+        PlayerObj thePlayer = PlayerAPI.FetchById(userId);
+        PlayerObj existingPlayer = PlayerAPI.FetchByUsername(newUserName);
+
+        if (existingPlayer != null) {
+            log.log(Level.WARNING, "player name already taken");
+        } else if (thePlayer != null) {
+            try {
+                thePlayer.username = newUserName;
+                ofy().save().entity(thePlayer).now();
+                didIt = true;
+            } catch (Exception exp) {
+                log.log(Level.SEVERE, exp.getMessage());
+            }
+        } else {
+            log.log(Level.SEVERE, "Could not find user to change name");
+        }
+
+        return didIt;
+    }
+
+    public static boolean ChangePassword(long userId, String newPassword) {
+        boolean didIt = false;
+
+        PlayerObj thePlayer = PlayerAPI.FetchById(userId);
+
+        if (thePlayer != null) {
+            try {
+                String[] saltAndHash = createSaltedPassword(newPassword);
+                thePlayer.passwordhash = saltAndHash[0];
+                thePlayer.passwordsalt = saltAndHash[1];
+                ofy().save().entity(thePlayer).now();
+                didIt = true;
+            } catch (Exception exp) {
+                log.log(Level.SEVERE, exp.getMessage());
+            }
+        } else {
+            log.log(Level.SEVERE, "Could not find user to change password");
+        }
+
+        return didIt;
+    }
+
     public static PlayerObj CreateNewUserNoPassword(HttpSession session) {
         PlayerObj newUser = PlayerAPI.CreateInstance();
         newUser.creationDate = new DateTime();
@@ -149,6 +194,9 @@ public class Authenticator {
         } catch (Exception exp) {
             log.log(Level.SEVERE, exp.getMessage());
         }
+        newUser.signedOn = true;
+        newUser.lastActiveDate = new DateTime();
+        newUser.creationDate = new DateTime();
 
         ofy().save().entity(newUser).now();
 
