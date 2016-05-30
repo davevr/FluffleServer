@@ -52,7 +52,7 @@ public class StoreAPI {
         boolean didIt = false;
         PlayerObj curPlayer = PlayerAPI.FetchById(userId);
 
-        if (curPlayer.isAdmin)
+        if (curPlayer.isAdmin != null && curPlayer.isAdmin)
             didIt = true;
         else if (storeName.compareToIgnoreCase("apple") == 0)
             didIt = ValidateAppleReceipt(receipt);
