@@ -2,11 +2,6 @@
   <library name="joda-time:joda-time:Latest" type="repository">
     <properties maven-id="joda-time:joda-time:LATEST" />
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.9.3/joda-time-2.9.3.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.9.3/joda-time-2.9.3.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.9.3/joda-time-2.9.3.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.9.3/joda-time-2.9.3.jar!/" />
-      <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.9.3/joda-time-2.9.3.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.9.4/joda-time-2.9.4.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.9.4/joda-time-2.9.4.jar!/" />
     </CLASSES>

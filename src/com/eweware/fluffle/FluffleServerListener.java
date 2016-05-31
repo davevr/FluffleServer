@@ -22,14 +22,10 @@ public class FluffleServerListener implements ServletContextListener {
     public void contextInitialized(ServletContextEvent event) {
         // register our classes
         JodaTimeTranslators.add(ObjectifyService.factory());
-        ObjectifyService.register(EyeColorRecord.class);
-        ObjectifyService.register(FurColorRecord.class);
         ObjectifyService.register(BunnyEyeColorObj.class);
         ObjectifyService.register(BunnyFurColorObj.class);
         ObjectifyService.register(BunnyBreedObj.class);
-
         ObjectifyService.register(BunnyObj.class);
-
         ObjectifyService.register(GameObj.class);
         ObjectifyService.register(PlayerObj.class);
         ObjectifyService.register(TossObj.class);

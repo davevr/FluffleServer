@@ -22,6 +22,7 @@ public class PlayerObj {
     public DateTime lastActiveDate;
     public Boolean signedOn;
     public Boolean isAdmin;
+    public Boolean isBreeder;
     public int totalBunnies;
     public int totalCarrotsFed;
     public DateTime lastAwardDate;

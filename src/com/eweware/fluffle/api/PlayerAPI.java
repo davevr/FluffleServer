@@ -6,6 +6,7 @@ import com.eweware.fluffle.obj.PlayerObj;
 import com.googlecode.objectify.Key;
 import org.joda.time.DateTime;
 
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,6 +23,29 @@ public class PlayerAPI {
         final PlayerObj foundItem = ofy().load().key(Key.create(PlayerObj.class, theId)).now();
 
         return foundItem;
+    }
+
+    public static PlayerObj FetchByUsername(String username) {
+        final List<PlayerObj> foundItems =  ofy().load().type(PlayerObj.class).filter("username =", username).list();
+
+        if ((foundItems != null) && (foundItems.size() > 0))
+            return foundItems.get(0);
+        else
+            return null;
+    }
+
+    public static void ChangeNickname(long userId, String newName) {
+
+        PlayerObj thePlayer = FetchById(userId);
+        thePlayer.nickname = newName;
+        ofy().save().entity(thePlayer).now();
+    }
+
+    public static void ChangeUserImage(long userId, String newImageURL) {
+
+        PlayerObj thePlayer = FetchById(userId);
+        thePlayer.userimage = newImageURL;
+        ofy().save().entity(thePlayer).now();
     }
 
     public static PlayerObj CreateInstance() {
