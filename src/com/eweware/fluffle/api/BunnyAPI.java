@@ -19,6 +19,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
  */
 public class BunnyAPI {
     private static final Logger log = Logger.getLogger(BunnyAPI.class.getName());
+    public static double kBasePrice = 32;
 
     public static double getProgress(BunnyObj theBuns) {
         return (double)theBuns.FeedState / (double)(CarrotsForNextSize (theBuns.BunnySize));
@@ -62,16 +63,10 @@ public class BunnyAPI {
     }
 
 
-    public int getCurrentValue(BunnyObj theBuns) {
-        int multiplier = (int)Math.pow (2, theBuns.BunnySize - 1);
-        return theBuns.Price * multiplier;
-    }
-
 
 
     public static BunnyObj MakeRandomBunny() {
         BunnyObj newBuns = new BunnyObj ();
-        double basePrice = 16;
         double totalChance = 1;
 
         newBuns.CurrentOwner = 0L;
@@ -91,7 +86,7 @@ public class BunnyAPI {
         newBuns.EyeColorName = newEyeColor.ColorName;
 
         totalChance = GetBunnyRareness(newBuns);
-        newBuns.Price = (int)(basePrice / totalChance);
+        newBuns.Price = (int)(kBasePrice / totalChance);
         newBuns.BunnySize = 1;
         ofy().save().entity(newBuns).now();
 
@@ -196,6 +191,14 @@ public class BunnyAPI {
         final BunnyObj foundItem = ofy().load().key(Key.create(BunnyObj.class, theId)).now();
 
         return foundItem;
+    }
+
+    public static int GetPrice(long bunnyId) {
+        BunnyObj theBuns = FetchById(bunnyId);
+        double totalChance = GetBunnyRareness(theBuns);
+        double basePrice = kBasePrice / totalChance;
+        double multiplier = Math.pow (2, theBuns.BunnySize - 1);
+        return (int)(basePrice * multiplier) / 2;
     }
 
 

@@ -25,6 +25,27 @@ public class PlayerAPI {
         return foundItem;
     }
 
+    public static int SellBunny(long userId, long bunnyId) {
+        BunnyObj theBuns = BunnyAPI.FetchById(bunnyId);
+        if (theBuns == null) {
+            log.log(Level.SEVERE, "invalid bunny id");
+            return 0;
+        }
+
+        if (theBuns.CurrentOwner != userId) {
+            log.log(Level.SEVERE, "user attempt to sell a bunny she doesn't own");
+            return 0;
+        }
+
+        PlayerObj   thePlayer = FetchById(userId);
+        int thePrice = BunnyAPI.GetPrice(bunnyId);
+        theBuns.CurrentOwner = 0L;
+        BunnyAPI.Save(theBuns);
+        GiveCarrots(thePlayer, thePrice);
+        return thePrice;
+    }
+
+
     public static PlayerObj FetchByUsername(String username) {
         final List<PlayerObj> foundItems =  ofy().load().type(PlayerObj.class).filter("username =", username).list();
 
