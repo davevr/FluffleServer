@@ -1,7 +1,9 @@
 package com.eweware.fluffle.api;
 
 import com.eweware.fluffle.obj.*;
+import com.google.appengine.api.datastore.Cursor;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.cmd.Query;
 import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Interval;
@@ -221,6 +223,15 @@ public class BunnyAPI {
         theBuns.HorizontalLoc = xLoc;
         theBuns.VerticalLoc = yLoc;
         Save(theBuns);
+    }
+
+    public static List<BunnyObj> FetchAllBunnies(String cursorString, int maxCount) {
+        Query<BunnyObj> query = ofy().load().type(BunnyObj.class).limit(maxCount);
+
+        if (cursorString != null)
+            query = query.startAt(Cursor.fromWebSafeString(cursorString));
+
+        return query.list();
     }
 
 }

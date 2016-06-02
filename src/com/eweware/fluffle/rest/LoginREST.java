@@ -2,6 +2,7 @@ package com.eweware.fluffle.rest;
 
 import com.eweware.fluffle.api.Authenticator;
 import com.eweware.fluffle.api.BunnyAPI;
+import com.eweware.fluffle.api.PlayerAPI;
 import com.eweware.fluffle.obj.PlayerObj;
 
 import javax.servlet.ServletException;
@@ -90,6 +91,18 @@ public class LoginREST extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        long curUserId = Authenticator.CurrentUserId(request.getSession());
+        boolean didIt = false;
 
+        if (curUserId > 0) {
+            didIt = true;
+        }
+
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setContentType("application/json");
+        PrintWriter out = response.getWriter();
+        RestUtils.get_gson().toJson(didIt, out);
+        out.flush();
+        out.close();
     }
 }

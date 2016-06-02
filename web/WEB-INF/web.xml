@@ -85,6 +85,54 @@
         <url-pattern>/api/v1/logout</url-pattern>
     </servlet-mapping>
 
+
+    <!-- static admin site -->
+    <servlet>
+        <servlet-name>AdminHome</servlet-name>
+        <jsp-file>adminsite/admin.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminHome</servlet-name>
+        <url-pattern>/admin</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminGame</servlet-name>
+        <jsp-file>adminsite/game.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminGame</servlet-name>
+        <url-pattern>/admin/game</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminBunny</servlet-name>
+        <jsp-file>adminsite/bunnies.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminBunny</servlet-name>
+        <url-pattern>/admin/bunnies</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminPlayer</servlet-name>
+        <jsp-file>adminsite/players.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminPlayer</servlet-name>
+        <url-pattern>/admin/players</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>AdminBreed</servlet-name>
+        <jsp-file>adminsite/breeds.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminBreed</servlet-name>
+        <url-pattern>/admin/breeds</url-pattern>
+    </servlet-mapping>
+
+
     <!-- listeners and filters -->
     <listener>
         <listener-class>com.eweware.fluffle.FluffleServerListener</listener-class>
