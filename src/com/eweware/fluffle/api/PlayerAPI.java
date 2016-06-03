@@ -73,6 +73,10 @@ public class PlayerAPI {
         PlayerObj newPlayer = new PlayerObj();
         newPlayer.signedOn = true;
         newPlayer.lastActiveDate = new DateTime();
+        newPlayer.carrotCount = 0;
+        newPlayer.creationDate = new DateTime();
+        newPlayer.totalBunnies = 0;
+        newPlayer.totalShares = 0;
         ofy().save().entity(newPlayer).now();
         BunnyObj theBuns = BunnyAPI.MakeRandomBunny();
         GiveBunny(newPlayer, theBuns);
@@ -171,6 +175,18 @@ public class PlayerAPI {
         theBuns.CurrentOwner = 0L;
         ofy().save().entity(theBuns).now();
         ofy().save().entity(thePlayer).now();
+    }
+
+    public static String GetDailyMessage(long playerId) {
+        String theMsg = "";
+        PlayerObj thePlayer = FetchById(playerId);
+
+        if (thePlayer != null) {
+
+        } else {
+            log.log(Level.SEVERE, "Null player logged in");
+        }
+        return theMsg;
     }
 
 }

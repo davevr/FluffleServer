@@ -73,6 +73,7 @@ public class BunnyAPI {
 
         newBuns.CurrentOwner = 0L;
         newBuns.OriginalOwner = 0L;
+        newBuns.TotalShares = 0;
         newBuns.Female = GameAPI.Rnd().nextBoolean();
 
         BunnyBreedObj newBreed = GameAPI.GetRandomBreed();

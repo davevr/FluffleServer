@@ -1,6 +1,11 @@
 <%@ page import="com.eweware.fluffle.api.Authenticator" %>
 <%@ page import="com.eweware.fluffle.obj.PlayerObj" %>
-<%@ page import="com.eweware.fluffle.api.PlayerAPI" %><%--
+<%@ page import="com.eweware.fluffle.api.PlayerAPI" %>
+<%@ page import="com.eweware.fluffle.obj.BunnyBreedObj" %>
+<%@ page import="com.eweware.fluffle.obj.BunnyObj" %>
+<%@ page import="static com.googlecode.objectify.ObjectifyService.ofy" %>
+<%@ page import="com.googlecode.objectify.cmd.Query" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Dave
   Date: 6/1/2016
@@ -11,6 +16,7 @@
 <html>
 <head>
     <title>Fluffle Admin - Breeds</title>
+    <link rel="stylesheet" href="../css/admin.css" type="text/css" media="screen">
 </head>
 <body>
 <h1>OK here is where you can admin the breeds of rabbits.  </h1>
@@ -32,36 +38,25 @@
         <tr>
             <td>Id</td>
             <td>Name</td>
-            <td>Owner</td>
-            <td>Size</td>
-            <td>Progress</td>
-            <td>Gender</td>
-            <td>Breed</td>
-            <td>Fur Color</td>
-            <td>Eye Color</td>
+            <td>rarity</td>
         </tr>
         </thead>
         <tbody>
 
         <%
-            Query<BunnyObj> query = ofy().load().type(BunnyObj.class).limit(100);
+            Query<BunnyBreedObj> query = ofy().load().type(BunnyBreedObj.class).limit(100);
 
             //query = query.startAt(Cursor.fromWebSafeString(cursorString));
-            List<BunnyObj> bunList = query.list();
+            List<BunnyBreedObj> breedList = query.list();
 
-            for(BunnyObj curBuns : bunList) {
+            for(BunnyBreedObj curBreed : breedList) {
 
         %>
         <tr>
-            <td><%= curBuns.id.toString() %></td>
-            <td><%= curBuns.BunnyName%></td>
-            <td><%= curBuns.CurrentOwner.toString() %></td>
-            <td><%= curBuns.BunnySize %></td>
-            <td><%= curBuns.FeedState %></td>
-            <td><%= curBuns.Female ? "female" : "male" %></td>
-            <td><%= curBuns.BreedName %></td>
-            <td><%= curBuns.FurColorName %></td>
-            <td><%= curBuns.EyeColorName %></td>
+            <td><%= curBreed.id.toString() %></td>
+            <td><%= curBreed.BreedName%></td>
+            <td><%= curBreed.rarity %></td>
+
         </tr>
         <%
             }

@@ -12,6 +12,7 @@
 <head>
     <title>Fluffle Admin Page</title>
 </head>
+<link rel="stylesheet" href="../css/admin.css" type="text/css" media="screen">
 <body>
 <h1>OK here is where you can admin fluffle.  </h1>
 

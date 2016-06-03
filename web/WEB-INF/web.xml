@@ -85,6 +85,25 @@
         <url-pattern>/api/v1/logout</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>StatusREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.admin.StatusREST</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>StatusREST</servlet-name>
+        <url-pattern>/api/v1/admin/status</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>LeaderBoardsREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.rest.LeaderBoardsREST</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>LeaderBoardsREST</servlet-name>
+        <url-pattern>/api/v1/leaderboards</url-pattern>
+    </servlet-mapping>
 
     <!-- static admin site -->
     <servlet>
@@ -127,6 +146,9 @@
         <servlet-name>AdminBreed</servlet-name>
         <jsp-file>adminsite/breeds.jsp</jsp-file>
     </servlet>
+
+
+
     <servlet-mapping>
         <servlet-name>AdminBreed</servlet-name>
         <url-pattern>/admin/breeds</url-pattern>

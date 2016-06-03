@@ -11,6 +11,7 @@
 <html>
 <head>
     <title>Fluffle Admin - Game</title>
+    <link rel="stylesheet" href="../css/admin.css" type="text/css" media="screen">
 </head>
 <body>
 <h1>OK here is where you can change the game settings.  </h1>

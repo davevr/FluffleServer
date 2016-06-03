@@ -57,7 +57,7 @@ public class LoginREST extends HttpServlet {
         }
 
         if (userNameStr != null) {
-            // change the user's name.  Typically this is only done o
+            // change the user's name.  Typically this is only done once
             boolean didIt = Authenticator.ChangeUserName(curUserId, userNameStr);
             if (didIt)
                 response.setStatus(HttpServletResponse.SC_OK);
@@ -72,7 +72,7 @@ public class LoginREST extends HttpServlet {
         }
 
         if (passwordStr != null) {
-            // change the user's name.  Typically this is only done o
+            // change the user's password
             boolean didIt = Authenticator.ChangePassword(curUserId, passwordStr);
             if (didIt)
                 response.setStatus(HttpServletResponse.SC_OK);

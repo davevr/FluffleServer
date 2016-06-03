@@ -94,14 +94,16 @@ public class TossAPI {
         theToss.catcherId = catcherId;
         theToss.endTossDate = new DateTime();
         theToss.isValid = false;
+        theBuns.TotalShares++;
 
         // handle exchange of money if needed
+        PlayerObj tosser = PlayerAPI.FetchById(theToss.tosserId);
+        tosser.totalShares++;
         if (theToss.price > 0) {
-            PlayerObj tosser = PlayerAPI.FetchById(theToss.tosserId);
             tosser.carrotCount += theToss.price;
             theCatcher.carrotCount -= theToss.price;
-            ofy().save().entity(tosser).now();
         }
+        ofy().save().entity(tosser).now();
 
         // now save!
         ofy().save().entity(theBuns).now();

@@ -17,6 +17,7 @@
 <html>
 <head>
     <title>Fluffle Admin - Bunnies</title>
+    <link rel="stylesheet" href="../css/admin.css" type="text/css" media="screen">
 </head>
 <body>
 <h1>OK here is where you can admin bunnies.  </h1>

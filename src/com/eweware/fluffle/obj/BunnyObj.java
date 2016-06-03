@@ -36,6 +36,7 @@ public class BunnyObj {
     public int BunnySize;
     public int FeedState;
     public int Price;
+    public int TotalShares;
     public DateTime LastBred;
     public Boolean inPark;
 

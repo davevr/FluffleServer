@@ -17,6 +17,7 @@
 <html>
 <head>
     <title>Fluffle Admin - Players</title>
+    <link rel="stylesheet" href="../css/admin.css" type="text/css" media="screen">
 </head>
 <body>
 <h1>OK here is where you can admin fluffle.  </h1>

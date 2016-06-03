@@ -33,6 +33,7 @@ public class PlayerREST extends HttpServlet {
             return;
         }
         String countStr = request.getParameter("carrotcount");
+        String messageStr = request.getParameter("message");
 
         if (countStr != null) {
             PlayerObj curPlayer = PlayerAPI.FetchById(currentUserId);
@@ -41,6 +42,14 @@ public class PlayerREST extends HttpServlet {
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
             RestUtils.get_gson().toJson(count, out);
+            out.flush();
+            out.close();
+        } else if (messageStr != null) {
+            String message = PlayerAPI.GetDailyMessage(currentUserId);
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            RestUtils.get_gson().toJson(message, out);
             out.flush();
             out.close();
         }

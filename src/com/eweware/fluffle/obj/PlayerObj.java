@@ -25,6 +25,7 @@ public class PlayerObj {
     public Boolean isBreeder;
     public int totalBunnies;
     public int totalCarrotsFed;
+    public int totalShares;
     public DateTime lastAwardDate;
     public List<DateTime> RepeatPlayList;
     public int carrotCount;
