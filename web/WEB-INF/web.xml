@@ -108,7 +108,7 @@
     <!-- static admin site -->
     <servlet>
         <servlet-name>AdminHome</servlet-name>
-        <jsp-file>adminsite/admin.jsp</jsp-file>
+        <jsp-file>/adminsite/admin.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminHome</servlet-name>
@@ -117,7 +117,7 @@
 
     <servlet>
         <servlet-name>AdminGame</servlet-name>
-        <jsp-file>adminsite/game.jsp</jsp-file>
+        <jsp-file>/adminsite/game.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminGame</servlet-name>
@@ -126,7 +126,7 @@
 
     <servlet>
         <servlet-name>AdminBunny</servlet-name>
-        <jsp-file>adminsite/bunnies.jsp</jsp-file>
+        <jsp-file>/adminsite/bunnies.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminBunny</servlet-name>
@@ -135,7 +135,7 @@
 
     <servlet>
         <servlet-name>AdminPlayer</servlet-name>
-        <jsp-file>adminsite/players.jsp</jsp-file>
+        <jsp-file>/adminsite/players.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>AdminPlayer</servlet-name>
@@ -144,7 +144,7 @@
 
     <servlet>
         <servlet-name>AdminBreed</servlet-name>
-        <jsp-file>adminsite/breeds.jsp</jsp-file>
+        <jsp-file>/adminsite/breeds.jsp</jsp-file>
     </servlet>
 
 
