@@ -50,6 +50,12 @@
       <root url="jar://$MAVEN_REPOSITORY$/com/fatboyindustrial/gson-jodatime-serialisers/gson-jodatime-serialisers/1.2.0/gson-jodatime-serialisers-1.2.0.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.6/joda-time-2.6.jar!/" />
       <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.3.1/gson-2.3.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/fatboyindustrial/gson-jodatime-serialisers/gson-jodatime-serialisers/1.2.0/gson-jodatime-serialisers-1.2.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.6/joda-time-2.6.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.3.1/gson-2.3.1.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/fatboyindustrial/gson-jodatime-serialisers/gson-jodatime-serialisers/1.2.0/gson-jodatime-serialisers-1.2.0.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/joda-time/joda-time/2.6/joda-time-2.6.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.3.1/gson-2.3.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
