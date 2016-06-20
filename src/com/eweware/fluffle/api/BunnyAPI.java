@@ -235,4 +235,45 @@ public class BunnyAPI {
         return query.list();
     }
 
+    public static void CheckAllBunniesForBreeding() {
+        List<PlayerObj> playerList = ofy().load().type(PlayerObj.class).list();
+        int numNewBuns = 0;
+
+        for (PlayerObj curPlayer : playerList) {
+            numNewBuns += CheckPlayerBunniesForBreeding(curPlayer);
+        }
+
+        log.info(String.format("created %d new bunnies", numNewBuns));
+    }
+
+    private static int CheckPlayerBunniesForBreeding(PlayerObj thePlayer) {
+        List<BunnyObj> playerBuns = FetchBunniesByOwner(thePlayer.id);
+        int numNewBuns = 0;
+
+        if (playerBuns.size() > 1) {
+            for (int i = 0; i < playerBuns.size() - 1; i++) {
+                BunnyObj curBuns = playerBuns.get(i);
+                for (int j = i + 1; j < playerBuns.size(); j++) {
+                    BunnyObj secondBuns = playerBuns.get(j);
+                    BunnyObj babyBuns = BreedBunnies(curBuns, secondBuns);
+                    if (babyBuns != null)
+                        numNewBuns++;
+                }
+            }
+        }
+
+        return numNewBuns;
+    }
+
+    public static void StarveAllBunnies() {
+        List<PlayerObj> playerList = ofy().load().type(PlayerObj.class).list();
+
+        for (PlayerObj curPlayer : playerList) {
+            List<BunnyObj> playerBuns = FetchBunniesByOwner(curPlayer.id);
+            for (BunnyObj curBuns : playerBuns) {
+                StarveBunny(curBuns, 1);
+            }
+        }
+    }
+
 }

@@ -192,4 +192,8 @@ public class StoreAPI {
         return newCarrots;
     }
 
+    public static void PeriodicUpdate() {
+        //todo:  update the store
+    }
+
 }
