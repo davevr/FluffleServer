@@ -106,6 +106,11 @@ public class PlayerAPI {
             return;
         }
 
+        if (thePlayer.carrotCount == 0) {
+            log.warning("Player tried to feed rabbit with no carrots");
+            return;
+        }
+
         BunnyObj theBuns = BunnyAPI.FetchById(bunnyId);
         if (theBuns == null) {
             log.log(Level.SEVERE, "could not find bunny id " + bunnyId);
@@ -119,6 +124,8 @@ public class PlayerAPI {
 
         // ok, looks good - feed it
         BunnyAPI.FeedBunny(theBuns);
+        thePlayer.carrotCount--;
+        ofy().save().entity(thePlayer).now();
     }
 
     public static void PlayerGotCarrots(long playerId, int numCarrots) {

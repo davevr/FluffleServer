@@ -28,7 +28,27 @@
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
   </head>
+  <div id="fb-root"></div>
+  <script>(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=1171087469573904";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));</script>
   <body>
-  Welcome to Fluffle!
+  <h1 style="text-align: center;">Fluffle!</h1>
+  <p style="text-align: center;"><em>a collection of bunnies</em></p>
+  <p><img style="display: block; margin-left: auto; margin-right: auto;" src="./images/profiles/minilop_white_blue.png" alt="cute white bunny" width="128" height="128" /></p>
+  <p>Fluffle is the fun and easy game where you can buy, feed, grow, breed, and collect bunnies. You can also trade them with your friends!</p>
+  <p>Fluffle is designed by Juliet, a 9 year old girl who loves bunnies.</p>
+  <p>Fluffle is coming soon to iOS and Android!</p>
+  <h2 style="text-align: center;"><strong>iOS OPEN BETA NOW OPEN!</strong></h2>
+  <p>If you want to participate in the open beta for iOS, please click the link below:</p>
+  <p style="text-align: center;"><a title="Beta Signup" href="mailto:flufflebeta@eweware.com?subject=Sign me up for the iOS beta!">I want to join the iOS beta!</a></p>
+  <p>Thank you for supporting Fluffle!</p>
+
+  <div class="fb-like" data-href="https://www.facebook.com/fluffleit/" data-layout="standard" data-action="like" data-show-faces="true" data-share="true"></div>
+
   </body>
 </html>

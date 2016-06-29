@@ -3,8 +3,6 @@ package com.eweware.fluffle.api;
 import com.eweware.fluffle.obj.BunnyObj;
 import com.eweware.fluffle.obj.PlayerObj;
 import com.eweware.fluffle.rest.RestUtils;
-import com.google.appengine.repackaged.com.google.common.base.Flag;
-import com.google.appengine.repackaged.com.google.protobuf.ByteString;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -190,6 +188,10 @@ public class StoreAPI {
         }
 
         return newCarrots;
+    }
+
+    public static void PeriodicUpdate() {
+        //todo:  update the store
     }
 
 }
