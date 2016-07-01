@@ -85,6 +85,13 @@ public class PlayerAPI {
         return newPlayer;
     }
 
+    public static void GiveBunny(long thePlayerId, BunnyObj theBuns) {
+        PlayerObj thePlayer = PlayerAPI.FetchById(thePlayerId);
+        if (thePlayer != null)
+            GiveBunny(thePlayer, theBuns);
+
+    }
+
     public static void GiveBunny(PlayerObj thePlayer, BunnyObj theBuns) {
         thePlayer.totalBunnies++;
         theBuns.CurrentOwner = thePlayer.id;
