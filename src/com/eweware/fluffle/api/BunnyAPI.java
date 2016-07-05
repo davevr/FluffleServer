@@ -151,31 +151,37 @@ public class BunnyAPI {
                 momBuns.LastBred = new DateTime();
                 dadBuns.LastBred = new DateTime();
                 babyBuns.BunnySize = 1;
-
                 Save(momBuns);
                 Save(dadBuns);
-                Save(babyBuns);
+                PlayerAPI.GiveBunny(momBuns.CurrentOwner, babyBuns);
             }
         }
 
         return babyBuns;
     }
 
+
     public static Boolean CanBreed(BunnyObj theBuns) {
         if (theBuns.BunnySize > 1) {
             if (!theBuns.Female)
                 return true;
+            else if (theBuns.LastBred == null)
+                return true;    // buns has never bred...
             else {
                 Period momBredTime = new Period(theBuns.LastBred, DateTime.now());
-                if (momBredTime.getDays() > 1)
+                int totalSeconds = momBredTime.toStandardSeconds().getSeconds();
+                if (totalSeconds > 86400)   // wait about a day
                     return true;
-                else
+                else {
+                    log.info("Bunny bred in the last 24 hours - " + totalSeconds + " sec ago");
                     return false;
+                }
             }
 
-        } else
+        } else {
+            log.info("bunny too small to breed");
             return false;
-
+        }
     }
 
     public static Boolean BunniesCanBreed(BunnyObj momBuns, BunnyObj dadBuns) {
@@ -184,7 +190,7 @@ public class BunnyAPI {
                 CanBreed(dadBuns) &&
                 (momBuns.Female != dadBuns.Female) &&
                 (momBuns.BunnySize == dadBuns.BunnySize) &&
-                (momBuns.BreedID == dadBuns.BreedID))
+                ((long)momBuns.BreedID == (long)dadBuns.BreedID))
             return true;
         else
             return false;
