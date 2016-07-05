@@ -5,6 +5,7 @@ import com.eweware.fluffle.obj.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Logger;
 
 import org.joda.time.DateTime;
 
@@ -14,6 +15,8 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
  * Created by davidvronay on 5/10/16.
  */
 public class GameAPI {
+    private static final Logger log = Logger.getLogger(GameAPI.class.getName());
+
     private static GameObj curGame;
 
     public static void Initialize() {
@@ -22,9 +25,12 @@ public class GameAPI {
         if (curGame == null) {
             // no game yet - make one!
             InitFirstGame();
-        } else {
-            // load the breeds
-            curGame.BunnyBreeds = BunnyBreedAPI.FetchAll();
+        }
+
+        // load the breeds
+        curGame.BunnyBreeds = BunnyBreedAPI.FetchAll();
+        if(curGame.BunnyBreeds.size() < 2) {
+            log.severe("Found less than 2 breeds!");
         }
     }
 
