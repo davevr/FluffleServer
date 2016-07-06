@@ -1,6 +1,7 @@
 package com.eweware.fluffle.api;
 
 import com.eweware.fluffle.obj.PlayerObj;
+import com.google.appengine.api.utils.SystemProperty;
 import com.googlecode.objectify.Key;
 
 import javax.crypto.Mac;
@@ -81,6 +82,11 @@ public class Authenticator {
             instance = new Authenticator();
         }
         return instance;
+    }
+
+    public static boolean IsLocalServer() {
+        return SystemProperty.environment.value() !=
+                SystemProperty.Environment.Value.Production;
     }
 
     public static String[] createSaltedPassword(final String password)

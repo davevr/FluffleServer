@@ -52,6 +52,8 @@ public class StoreAPI {
 
         if (curPlayer.isAdmin != null && curPlayer.isAdmin)
             didIt = true;
+        else if (Authenticator.IsLocalServer())
+            didIt = true;
         else if (storeName.compareToIgnoreCase("apple") == 0)
             didIt = ValidateAppleReceipt(receipt);
         else if (storeName.compareToIgnoreCase("google") == 0)
