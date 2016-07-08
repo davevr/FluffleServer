@@ -39,7 +39,9 @@ public class BunnyObj {
     public int TotalShares;
     public DateTime LastBred;
     public Boolean inPark;
-
+    public int Happiness;
+    public String CurrentOwnerName;
+    public String CurrentOwnerImg;
 
 
 }

@@ -45,6 +45,20 @@ public class BunnyAPI {
         return leveledUp;
     }
 
+    public static Boolean PetBunny(BunnyObj theBuns) {
+        Boolean leveledUp = false;
+
+        if (theBuns.Happiness != 100) {
+            theBuns.Happiness++;
+            if (theBuns.Happiness >= 100) {
+                theBuns.Happiness = 100;
+                leveledUp = true;
+            }
+            ofy().save().entity(theBuns).now();
+        }
+        return leveledUp;
+    }
+
     public static void StarveBunny(BunnyObj theBuns, int numDays) {
         theBuns.FeedState -= numDays;
         if (theBuns.FeedState < 0)

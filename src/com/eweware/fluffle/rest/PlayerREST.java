@@ -68,6 +68,12 @@ public class PlayerREST extends HttpServlet {
         String buyStr = request.getParameter("buybunny");
         String sellStr = request.getParameter("sellbunny");
         String nickStr = request.getParameter("nickname");
+        String petStr = request.getParameter("pet");
+
+        if (petStr != null) {
+            long bunnyId = Long.parseLong(petStr);
+            PlayerAPI.PlayerPetBunny(currentUserId, bunnyId);
+        }
 
         if (feedStr != null) {
             long bunnyId = Long.parseLong(feedStr);

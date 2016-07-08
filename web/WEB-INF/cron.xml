@@ -8,6 +8,12 @@
     </cron>
 
     <cron>
+        <url>/api/v1/admin/sadbunny</url>
+        <description>Clean up sessions</description>
+        <schedule>every 1 hours</schedule>
+    </cron>
+
+    <cron>
         <url>/api/v1/admin/dailybreed</url>
         <description>every day, breed bunnies</description>
         <schedule>every 24 hours</schedule>

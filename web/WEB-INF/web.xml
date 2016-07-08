@@ -105,6 +105,15 @@
         <url-pattern>/api/v1/leaderboards</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>PrivacyPage</servlet-name>
+        <jsp-file>/privacy.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PrivacyPage</servlet-name>
+        <url-pattern>/privacy</url-pattern>
+    </servlet-mapping>
+
     <!-- static admin site -->
     <servlet>
         <servlet-name>AdminHome</servlet-name>
@@ -158,6 +167,15 @@
         <servlet-name>StoreUpdateREST</servlet-name>
         <servlet-class>com.eweware.fluffle.admin.StoreUpdateREST</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SadBunnyREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.admin.SadBunnyREST</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>SadBunnyREST</servlet-name>
+        <url-pattern>api/v1/admin/sadbunny</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>BreedREST</servlet-name>

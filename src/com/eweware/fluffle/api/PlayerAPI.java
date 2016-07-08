@@ -106,6 +106,28 @@ public class PlayerAPI {
         ofy().save().entity(thePlayer).now();
     }
 
+    public static void PlayerPetBunny(long playerId, long bunnyId) {
+        PlayerObj thePlayer = FetchById(playerId);
+        if (thePlayer == null) {
+            log.log(Level.SEVERE, "could not find player id " + playerId);
+            return;
+        }
+
+        BunnyObj theBuns = BunnyAPI.FetchById(bunnyId);
+        if (theBuns == null) {
+            log.log(Level.SEVERE, "could not find bunny id " + bunnyId);
+            return;
+        }
+
+        if (theBuns.CurrentOwner != playerId) {
+            log.log(Level.SEVERE, "player id " + playerId + " does not own bunny id " + bunnyId);
+            return;
+        }
+
+        // ok, looks good - feed it
+        BunnyAPI.PetBunny(theBuns);
+    }
+
     public static void PlayerFedBunny(long playerId, long bunnyId) {
         PlayerObj thePlayer = FetchById(playerId);
         if (thePlayer == null) {
