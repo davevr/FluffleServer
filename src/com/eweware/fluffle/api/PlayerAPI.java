@@ -65,7 +65,10 @@ public class PlayerAPI {
     public static void ChangeUserImage(long userId, String newImageURL) {
 
         PlayerObj thePlayer = FetchById(userId);
-        thePlayer.userimage = newImageURL;
+        if (newImageURL.isEmpty())
+            thePlayer.userimage = null;
+        else
+            thePlayer.userimage = newImageURL;
         ofy().save().entity(thePlayer).now();
     }
 

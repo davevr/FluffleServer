@@ -32,10 +32,10 @@ public class UploadImageREST extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.addHeader("Access-Control-Allow-Origin", "*");
         if (Authenticator.getInstance().UserIsLoggedIn(request.getSession())) {
             BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-            String theUrl = blobstoreService.createUploadUrl("/api/image/upload");
+            String theUrl = blobstoreService.createUploadUrl("/api/v1/uploadImage");
 
             PrintWriter out = response.getWriter();
             out.write(theUrl);
@@ -50,38 +50,28 @@ public class UploadImageREST extends HttpServlet {
 
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        response.addHeader("Access-Control-Allow-Origin", "*");
         // ensure user is signed in
         HttpSession session = request.getSession();
 
-        long curUser = Authenticator.CurrentUserId(session);
+        Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
 
-        if (curUser != 0) {
-            Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(request);
+        List<BlobKey> blobKeys = blobs.get("file");
 
-            List<BlobKey> blobKeys = blobs.get("file");
-
-            if (blobKeys == null || blobKeys.isEmpty()) {
-                log.log(Level.WARNING, "Failed to find image data");
-                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
-            }
-            else {
-                ImagesService imagesService = ImagesServiceFactory.getImagesService();
-                ServingUrlOptions servingOptions = ServingUrlOptions.Builder.withBlobKey(blobKeys.get(0));
-                String servingUrl = imagesService.getServingUrl(servingOptions);
-
-                // write it to the user
-                response.setContentType("application/json");
-                PrintWriter out = response.getWriter();
-                Gson gson = new GsonBuilder().create();
-                gson.toJson(servingUrl, out);
-                out.flush();
-                out.close();
-            }
+        if (blobKeys == null || blobKeys.isEmpty()) {
+            log.log(Level.WARNING, "Failed to find image data");
+            response.setStatus(HttpServletResponse.SC_NOT_FOUND);
         }
         else {
-            log.log(Level.WARNING, "Failed to authenticate user");
-            response.setStatus(HttpStatusCodes.STATUS_CODE_UNAUTHORIZED);
+            ImagesService imagesService = ImagesServiceFactory.getImagesService();
+            ServingUrlOptions servingOptions = ServingUrlOptions.Builder.withBlobKey(blobKeys.get(0));
+            String servingUrl = imagesService.getServingUrl(servingOptions);
+
+            // write it to the user
+            PrintWriter out = response.getWriter();
+            out.write(servingUrl);
+            out.flush();
+            out.close();
         }
     }
 }
