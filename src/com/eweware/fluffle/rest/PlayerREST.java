@@ -69,6 +69,7 @@ public class PlayerREST extends HttpServlet {
         String sellStr = request.getParameter("sellbunny");
         String nickStr = request.getParameter("nickname");
         String petStr = request.getParameter("pet");
+        String imageStr = request.getParameter("image");
 
         if (petStr != null) {
             long bunnyId = Long.parseLong(petStr);
@@ -97,6 +98,10 @@ public class PlayerREST extends HttpServlet {
 
         if (nickStr != null) {
             PlayerAPI.ChangeNickname(currentUserId, nickStr);
+        }
+
+        if (imageStr != null) {
+            PlayerAPI.ChangeUserImage(currentUserId, imageStr);
         }
 
         response.setStatus(HttpServletResponse.SC_OK);
