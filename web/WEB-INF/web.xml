@@ -171,6 +171,16 @@
         <servlet-name>SadBunnyREST</servlet-name>
         <servlet-class>com.eweware.fluffle.admin.SadBunnyREST</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UploadImageREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.rest.UploadImageREST</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>UploadImageREST</servlet-name>
+        <url-pattern>api/v1/uploadImage</url-pattern>
+    </servlet-mapping>
+
 
     <servlet-mapping>
         <servlet-name>SadBunnyREST</servlet-name>

@@ -74,7 +74,7 @@ public class BunnyREST extends HttpServlet {
         if (renameStr != null) {
             long bunnyId = Long.parseLong(renameStr);
             String newName = request.getParameter("name");
-            BunnyAPI.RenameBunny(bunnyId, newName);
+            BunnyAPI.RenameBunny(currentUserId, bunnyId, newName);
         }
 
         if (moveStr != null) {

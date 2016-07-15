@@ -13,10 +13,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 
 import java.net.URL;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,14 +26,37 @@ public class StoreAPI {
     private static final Logger log = Logger.getLogger(StoreAPI.class.getName());
 
     public static List<BunnyObj> FetchAvailableBunnies() {
-        List<BunnyObj> availableBuns = ofy().load().type(BunnyObj.class).filter("CurrentOwner =",0).list();
+        List<BunnyObj> size1Bunnies = ofy().load().type(BunnyObj.class).filter("CurrentOwner =",0).filter("BunnySize =", 1).list();
 
-        if (availableBuns.size() > 5) {
-            return availableBuns;
+        if (size1Bunnies.size() > 5) {
+            List<BunnyObj>  largeList = FetchAvailableLargeBunnies();
+
+            if (largeList.size() + size1Bunnies.size() < 100) {
+                size1Bunnies.addAll(largeList);
+                return size1Bunnies;
+            } else {
+                for (int i = 0; i < 10; i++) {
+                    BunnyObj curBun = size1Bunnies.remove(GameAPI.Rnd().nextInt(size1Bunnies.size()));
+                    largeList.add(curBun);
+                }
+
+                return largeList;
+            }
         } else {
             RepopulateStore();
             return FetchAvailableBunnies();
         }
+    }
+
+    public static List<BunnyObj> FetchAvailableLargeBunnies() {
+        List<BunnyObj>  bunnyList = new ArrayList<>();
+
+        for (int i = 2; i <= 10; i++) {
+            List<BunnyObj> curSizeList = ofy().load().type(BunnyObj.class).filter("CurrentOwner =",0).filter("BunnySize =", i).limit(10).list();
+            bunnyList.addAll(curSizeList);
+        }
+
+        return bunnyList;
     }
 
     private static void RepopulateStore() {

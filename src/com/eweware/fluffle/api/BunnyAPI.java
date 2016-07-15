@@ -233,14 +233,26 @@ public class BunnyAPI {
         return ofy().load().type(BunnyObj.class).filter("CurrentOwner =", ownerId).list();
     }
 
-    public static void RenameBunny(long theBunsId, String newName) {
+    public static void RenameBunny(long playerId, long theBunsId, String newName) {
         BunnyObj theBuns = FetchById(theBunsId);
-        theBuns.BunnyName = newName;
-        Save(theBuns);
+        if ((theBuns.BunnyName == null) || (theBuns.OriginalOwner == 0L) || (theBuns.OriginalOwner == playerId)) {
+            theBuns.BunnyName = newName;
+            Save(theBuns);
+        }
     }
 
     public static void UpdateBunnyLoc(long theBunsId, int xLoc, int yLoc) {
         BunnyObj theBuns = FetchById(theBunsId);
+        if (xLoc < -100)
+            xLoc = -100;
+        else if (xLoc > 100)
+            xLoc = 100;
+
+        if (yLoc < -100)
+            yLoc = -100;
+        else if (yLoc > 100)
+            yLoc = 100;
+
         theBuns.HorizontalLoc = xLoc;
         theBuns.VerticalLoc = yLoc;
         Save(theBuns);
