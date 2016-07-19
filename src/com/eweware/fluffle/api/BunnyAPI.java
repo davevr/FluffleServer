@@ -282,7 +282,7 @@ public class BunnyAPI {
         List<BunnyObj> playerBuns = FetchBunniesByOwner(thePlayer.id);
         int numNewBuns = 0;
 
-        if (playerBuns.size() > 1) {
+        if ((playerBuns.size() > 1) && (playerBuns.size() < 50)) {
             for (int i = 0; i < playerBuns.size() - 1; i++) {
                 BunnyObj curBuns = playerBuns.get(i);
                 for (int j = i + 1; j < playerBuns.size(); j++) {
