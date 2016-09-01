@@ -216,12 +216,29 @@ public class BunnyAPI {
         return foundItem;
     }
 
-    public static int GetPrice(long bunnyId) {
+    public static int GetSellPrice(long bunnyId) {
+        BunnyObj theBuns = FetchById(bunnyId);
+        double totalChance = GetBunnyRareness(theBuns);
+        double basePrice = kBasePrice / totalChance;
+        double totalCarrots = GetTotalCarrots(theBuns);
+        return (int)(basePrice + (totalCarrots * 2));
+    }
+
+    private static int GetTotalCarrots(BunnyObj buns) {
+        int carrotCount = 0;
+        for (int i = 0; i < buns.BunnySize; i++) {
+            carrotCount += CarrotsForNextSize(i);
+        }
+        carrotCount += buns.FeedState;
+
+        return carrotCount;
+    }
+    public static int GetBuyPrice(long bunnyId) {
         BunnyObj theBuns = FetchById(bunnyId);
         double totalChance = GetBunnyRareness(theBuns);
         double basePrice = kBasePrice / totalChance;
         double multiplier = Math.pow (2, theBuns.BunnySize - 1);
-        return (int)(basePrice * multiplier) / 2;
+        return (int)(basePrice * multiplier);
     }
 
 

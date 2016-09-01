@@ -38,8 +38,9 @@ public class PlayerAPI {
         }
 
         PlayerObj   thePlayer = FetchById(userId);
-        int thePrice = BunnyAPI.GetPrice(bunnyId);
+        int thePrice = BunnyAPI.GetSellPrice(bunnyId);
         theBuns.CurrentOwner = 0L;
+        theBuns.Price = BunnyAPI.GetBuyPrice(bunnyId);
         BunnyAPI.Save(theBuns);
         GiveCarrots(thePlayer, thePrice);
         return thePrice;
@@ -188,7 +189,7 @@ public class PlayerAPI {
             return;
         }
 
-        thePlayer.carrotCount -= theBuns.Price;
+        thePlayer.carrotCount -= BunnyAPI.GetBuyPrice(bunnyId);
         PlayerAPI.GiveBunny(thePlayer, theBuns);
     }
 
@@ -210,8 +211,9 @@ public class PlayerAPI {
             return;
         }
 
-        thePlayer.carrotCount += theBuns.Price;
+        thePlayer.carrotCount += BunnyAPI.GetSellPrice(bunnyId);
         theBuns.CurrentOwner = 0L;
+        theBuns.Price = BunnyAPI.GetBuyPrice(bunnyId);
         ofy().save().entity(theBuns).now();
         ofy().save().entity(thePlayer).now();
     }

@@ -43,7 +43,7 @@
   <p><img style="display: block; margin-left: auto; margin-right: auto;" src="./images/profiles/minilop_white_blue.png" alt="cute white bunny" width="128" height="128" /></p>
   <p>Fluffle is the fun and easy game where you can buy, feed, grow, breed, and collect bunnies. You can also trade them with your friends!</p>
   <p>Fluffle is designed by Juliet, a 9 year old girl who loves bunnies.</p>
-  <p>Fluffle is coming soon to iOS and Android!</p>
+  <p>Fluffle is available now on iOS and coming soon to Android!</p>
 <p></p>
   <a href="https://itunes.apple.com/us/app/fluffle/id1118628159?ls=1&mt=8">  <img src='images/Download_on_the_App_Store_Badge_US-UK_135x40.svg'></a>
   <h2>Help spread the word by joining Fluffle on Social Media!</h2>

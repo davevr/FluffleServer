@@ -84,7 +84,7 @@ public class StoreREST extends HttpServlet {
 
         if (bunnyIdStr != null) {
             long bunnyId = Long.parseLong(bunnyIdStr);
-            int price = BunnyAPI.GetPrice(bunnyId);
+            int price = BunnyAPI.GetSellPrice(bunnyId);
 
             response.setContentType("application/json");
             PrintWriter out = response.getWriter();
