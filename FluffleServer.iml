@@ -32,5 +32,6 @@
     <orderEntry type="library" name="com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:Latest" level="project" />
     <orderEntry type="library" name="com.googlecode.objectify:objectify:Latest" level="project" />
     <orderEntry type="library" name="joda-time:joda-time:Latest" level="project" />
+    <orderEntry type="library" name="com.google.api-client:google-api-client-appengine:1.21.0" level="project" />
   </component>
 </module>
