@@ -46,6 +46,8 @@
   <p>Fluffle is available now on iOS and coming soon to Android!</p>
 <p></p>
   <a href="https://itunes.apple.com/us/app/fluffle/id1118628159?ls=1&mt=8">  <img src='images/Download_on_the_App_Store_Badge_US-UK_135x40.svg'></a>
+  <a href='https://play.google.com/store/apps/details?id=com.eweware.fluffle&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="153" hright="46"  alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+
   <h2>Help spread the word by joining Fluffle on Social Media!</h2>
   <a target="_blank" title="follow me on facebook" href="https://www.facebook.com/fluffleit"><img alt="find me on facebook" src="https://c866088.ssl.cf3.rackcdn.com/assets/badgefacebook.png" border=0></a>
 
