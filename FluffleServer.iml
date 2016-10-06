@@ -32,6 +32,13 @@
     <orderEntry type="library" name="com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:Latest" level="project" />
     <orderEntry type="library" name="com.googlecode.objectify:objectify:Latest" level="project" />
     <orderEntry type="library" name="joda-time:joda-time:Latest" level="project" />
-    <orderEntry type="library" name="com.google.api-client:google-api-client-appengine:1.21.0" level="project" />
+    <orderEntry type="library" name="com.google.api-client:google-api-client-appengine:Latest" level="project" />
+    <orderEntry type="library" name="com.fatboyindustrial.gson-jodatime-serialisers:gson-jodatime-serialisers:Latest" level="project" />
+    <orderEntry type="library" name="com.google.code.gson:gson:Latest" level="project" />
+    <orderEntry type="library" name="com.google.guava:guava:Latest" level="project" />
+    <orderEntry type="library" name="com.googlecode.objectify:objectify:Latest" level="project" />
+    <orderEntry type="library" name="commons-codec:commons-codec:Latest" level="project" />
+    <orderEntry type="library" name="joda-time:joda-time:Latest" level="project" />
+    <orderEntry type="library" name="com.google.apis:google-api-services-androidpublisher:Latest" level="project" />
   </component>
 </module>

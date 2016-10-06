@@ -175,6 +175,17 @@
         <servlet-name>UploadImageREST</servlet-name>
         <servlet-class>com.eweware.fluffle.rest.UploadImageREST</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>GiftREST</servlet-name>
+        <servlet-class>com.eweware.fluffle.admin.GiftREST</servlet-class>
+    </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>GiftREST</servlet-name>
+        <url-pattern>api/v1/admin/gift</url-pattern>
+    </servlet-mapping>
+
 
     <servlet-mapping>
         <servlet-name>UploadImageREST</servlet-name>

@@ -3,6 +3,14 @@ package com.eweware.fluffle.api;
 import com.eweware.fluffle.obj.BunnyObj;
 import com.eweware.fluffle.obj.PlayerObj;
 import com.eweware.fluffle.rest.RestUtils;
+import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
+import com.google.api.client.googleapis.extensions.appengine.auth.oauth2.AppIdentityCredential;
+import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
+import com.google.api.client.http.HttpTransport;
+import com.google.api.client.json.JsonFactory;
+import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.services.androidpublisher.AndroidPublisher;
+import com.google.api.services.androidpublisher.model.ProductPurchase;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -163,10 +171,35 @@ public class StoreAPI {
         return didIt;
     }
 
+    private class GoogleReceipt {
+        public String productId;
+        public String purchaseToken;
+    }
     public static boolean ValidateGoogleReceipt(String receipt) {
 
         boolean didIt = false;
 
+        try {
+            GoogleCredential credential = GoogleCredential.getApplicationDefault();
+
+                HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
+                JsonFactory jsonFactory = new JacksonFactory();
+                AndroidPublisher publisher = new AndroidPublisher.Builder(httpTransport, jsonFactory, credential)
+                        .setApplicationName("fluffle").build();
+                AndroidPublisher.Purchases purchases = publisher.purchases();
+
+            // todo - parse receipt
+            GoogleReceipt receiptObj = RestUtils.get_gson().fromJson(receipt, GoogleReceipt.class);
+
+                final AndroidPublisher.Purchases.Products.Get request = purchases.products().get("com.eweware.fluffle", receiptObj.productId ,
+                        receiptObj.purchaseToken);
+                final ProductPurchase purchase = request.execute();
+                if (purchase.getConsumptionState() > 1)
+                    didIt = true;
+
+        } catch (Exception exp) {
+            log.severe(exp.getMessage());
+        }
 
         return didIt;
     }
@@ -185,18 +218,23 @@ public class StoreAPI {
 
             switch (productName) {
                 case "com.eweware.fluffle.carrot01":
+                case "carrot_level_01":
                     carrotsToAdd = 100;
                     break;
                 case "com.eweware.fluffle.carrot02":
+                case "carrot_level_02":
                     carrotsToAdd = 600;
                     break;
                 case "com.eweware.fluffle.carrot03":
+                case "carrot_level_03":
                     carrotsToAdd = 1500;
                     break;
                 case"com.eweware.fluffle.carrot04":
+                case "carrot_level_04":
                     carrotsToAdd = 4000;
                     break;
                 case "com.eweware.fluffle.carrot05":
+                case "carrot_level_05":
                     carrotsToAdd = 10000;
                     break;
                 default:

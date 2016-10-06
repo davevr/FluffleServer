@@ -6,8 +6,7 @@ import com.eweware.fluffle.api.PlayerAPI;
 import com.eweware.fluffle.api.StoreAPI;
 import com.eweware.fluffle.obj.BunnyObj;
 import com.eweware.fluffle.obj.PlayerObj;
-import com.google.api.server.spi.request.Auth;
-import com.google.appengine.repackaged.com.google.api.client.util.IOUtils;
+
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

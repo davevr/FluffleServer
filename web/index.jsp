@@ -18,6 +18,7 @@
     <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
     <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-180x180.png">
+    <link href="https://fonts.googleapis.com/css?family=Finger+Paint" rel="stylesheet">
     <link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
     <link rel="icon" type="image/png" href="/android-chrome-192x192.png" sizes="192x192">
     <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96">
@@ -28,6 +29,16 @@
     <meta name="msapplication-TileImage" content="/mstile-144x144.png">
     <meta name="theme-color" content="#ffffff">
     <%@include file="scripts/facebookpixel.html"%>
+    <style>
+      h1 {color:green;
+        font-family: 'Finger Paint', cursive;}
+      p {
+        font-family: 'Finger Paint', cursive;}
+
+      h2 {
+        color: blue;
+      }
+    </style>
   </head>
   <div id="fb-root"></div>
   <script>(function(d, s, id) {
@@ -39,14 +50,29 @@
   }(document, 'script', 'facebook-jssdk'));</script>
   <body>
   <h1 style="text-align: center;">Fluffle!</h1>
-  <p style="text-align: center;"><em>a collection of bunnies</em></p>
+  <p style="text-align: center;">a collection of bunnies</p>
   <p><img style="display: block; margin-left: auto; margin-right: auto;" src="./images/profiles/minilop_white_blue.png" alt="cute white bunny" width="128" height="128" /></p>
+
+  <table>
+    <tbody>
+    <tr>
+      <td>
+        <a href="https://itunes.apple.com/us/app/fluffle/id1118628159?ls=1&mt=8">  <img src='images/Download_on_the_App_Store_Badge_US-UK_135x40.svg'></a>
+
+      </td>
+      <td>
+        <a href='https://play.google.com/store/apps/details?id=com.eweware.fluffle&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="153" hright="46"  alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+
+      </td>
+    </tr>
+    </tbody>
+  </table>
+
   <p>Fluffle is the fun and easy game where you can buy, feed, grow, breed, and collect bunnies. You can also trade them with your friends!</p>
   <p>Fluffle is designed by Juliet, a 9 year old girl who loves bunnies.</p>
   <p>Fluffle is available now on iOS and coming soon to Android!</p>
 <p></p>
-  <a href="https://itunes.apple.com/us/app/fluffle/id1118628159?ls=1&mt=8">  <img src='images/Download_on_the_App_Store_Badge_US-UK_135x40.svg'></a>
-  <a href='https://play.google.com/store/apps/details?id=com.eweware.fluffle&utm_source=global_co&utm_medium=prtnr&utm_content=Mar2515&utm_campaign=PartBadge&pcampaignid=MKT-Other-global-all-co-prtnr-py-PartBadge-Mar2515-1'><img width="153" hright="46"  alt='Get it on Google Play' src='https://play.google.com/intl/en_us/badges/images/generic/en_badge_web_generic.png'/></a>
+
 
   <h2>Help spread the word by joining Fluffle on Social Media!</h2>
   <a target="_blank" title="follow me on facebook" href="https://www.facebook.com/fluffleit"><img alt="find me on facebook" src="https://c866088.ssl.cf3.rackcdn.com/assets/badgefacebook.png" border=0></a>
