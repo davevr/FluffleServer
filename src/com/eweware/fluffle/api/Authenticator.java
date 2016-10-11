@@ -148,7 +148,7 @@ public class Authenticator {
             log.log(Level.WARNING, "player name already taken");
         } else if (thePlayer != null) {
             try {
-                thePlayer.username = newUserName;
+                thePlayer.username = newUserName.toLowerCase();
                 ofy().save().entity(thePlayer).now();
                 didIt = true;
             } catch (Exception exp) {
@@ -191,7 +191,7 @@ public class Authenticator {
         session.setAttribute(USERID, newUser.id);
 
         String username = "player" + newUser.id.toString();
-        newUser.username = username;
+        newUser.username = username.toLowerCase();
         String password = username;
         try {
             String[] saltAndHash = createSaltedPassword(password);

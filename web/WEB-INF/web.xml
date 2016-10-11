@@ -179,6 +179,16 @@
         <servlet-name>GiftREST</servlet-name>
         <servlet-class>com.eweware.fluffle.admin.GiftREST</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdVerify</servlet-name>
+        <servlet-class>com.eweware.fluffle.rest.AdVerify</servlet-class>
+    </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>AdVerify</servlet-name>
+        <url-pattern>api/v1/admin/adverify</url-pattern>
+    </servlet-mapping>
 
 
     <servlet-mapping>

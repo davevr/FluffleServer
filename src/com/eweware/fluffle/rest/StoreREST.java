@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -26,7 +27,6 @@ public class StoreREST extends HttpServlet {
     private static final Logger log = Logger.getLogger(StoreREST.class.getName());
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        boolean didIt = false;
         long curUserId = Authenticator.CurrentUserId(request.getSession());
         String bunnyIdStr = request.getParameter("bunnyid");
 
@@ -52,26 +52,31 @@ public class StoreREST extends HttpServlet {
                 log.log(Level.SEVERE, "signed out out user trying to make a purchase");
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             } else {
+                int newCarrots = 0;
 
-                String theReceipt = request.getParameter("receipt-data");
-                String productId = request.getParameter("product");
-                String storeId = request.getParameter("store");
+                try {
+                    String theReceipt = request.getParameter("receipt-data");
+                    String productId = request.getParameter("product");
+                    String storeId = request.getParameter("store");
 
-                if (productId == null || theReceipt == null || storeId == null) {
-                    log.log(Level.SEVERE, "no product, receipt, or store specified for buy");
-                    response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                    if (productId == null || theReceipt == null || storeId == null) {
+                        log.log(Level.SEVERE, "no product, receipt, or store specified for buy");
+                        response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
-                } else {
-                    if (StoreAPI.ValidateReceipt(curUserId, storeId, theReceipt)) {
-                        StoreAPI.AddCredit(curUserId, productId);
-                        response.setStatus(HttpServletResponse.SC_OK);
-                        didIt = true;
+                    } else {
+                        if (StoreAPI.ValidateReceipt(curUserId, storeId, theReceipt)) {
+                            newCarrots = StoreAPI.AddCredit(curUserId, productId);
+                            response.setStatus(HttpServletResponse.SC_OK);
+                        }
+
                     }
+                } catch (Exception exp) {
+                    log.severe(exp.getMessage());
                 }
 
                 response.setContentType("application/json");
                 PrintWriter out = response.getWriter();
-                RestUtils.get_gson().toJson(didIt, out);
+                RestUtils.get_gson().toJson(newCarrots, out);
                 out.flush();
                 out.close();
             }

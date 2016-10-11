@@ -2,12 +2,10 @@ package com.eweware.fluffle.api;
 
 import com.eweware.fluffle.obj.*;
 import com.google.appengine.api.datastore.Cursor;
+import com.google.appengine.repackaged.com.google.protobuf.Duration;
 import com.googlecode.objectify.Key;
 import com.googlecode.objectify.cmd.Query;
-import org.joda.time.DateTime;
-import org.joda.time.Days;
-import org.joda.time.Interval;
-import org.joda.time.Period;
+import org.joda.time.*;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -21,7 +19,7 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
  */
 public class BunnyAPI {
     private static final Logger log = Logger.getLogger(BunnyAPI.class.getName());
-    public static double kBasePrice = 32;
+    public static double kBasePrice = 64;
 
     public static double getProgress(BunnyObj theBuns) {
         return (double)theBuns.FeedState / (double)(CarrotsForNextSize (theBuns.BunnySize));
@@ -102,9 +100,8 @@ public class BunnyAPI {
         newBuns.EyeColorID = newEyeColor.id;
         newBuns.EyeColorName = newEyeColor.ColorName;
 
-        totalChance = GetBunnyRareness(newBuns);
-        newBuns.Price = (int)(kBasePrice / totalChance);
         newBuns.BunnySize = 1;
+        newBuns.Price = GetSellPrice(newBuns);
         ofy().save().entity(newBuns).now();
 
         return newBuns;
@@ -182,18 +179,15 @@ public class BunnyAPI {
             else if (theBuns.LastBred == null)
                 return true;    // buns has never bred...
             else {
-                Period momBredTime = new Period(theBuns.LastBred, DateTime.now());
-                int totalSeconds = momBredTime.toStandardSeconds().getSeconds();
+                int totalSeconds = Seconds.secondsBetween(DateTime.now(), theBuns.LastBred).getSeconds();
                 if (totalSeconds > 86400)   // wait about a day
                     return true;
                 else {
-                    log.info("Bunny bred in the last 24 hours - " + totalSeconds + " sec ago");
                     return false;
                 }
             }
 
         } else {
-            log.info("bunny too small to breed");
             return false;
         }
     }
@@ -218,10 +212,30 @@ public class BunnyAPI {
 
     public static int GetSellPrice(long bunnyId) {
         BunnyObj theBuns = FetchById(bunnyId);
+
+        return GetSellPrice(theBuns);
+    }
+
+    public static int GetSellPrice(BunnyObj theBuns) {
         double totalChance = GetBunnyRareness(theBuns);
-        double basePrice = kBasePrice / totalChance;
-        double totalCarrots = GetTotalCarrots(theBuns);
-        return (int)(basePrice + (totalCarrots * 2));
+        int multiplier = 2;
+        int curPrice = (int)kBasePrice;
+
+        for (int i = 1; i < theBuns.BunnySize; i++) {
+            curPrice += CarrotsForNextSize(i) * multiplier;
+            multiplier++;
+        }
+
+        if (totalChance < .02) {
+            curPrice *= 2;
+            log.info("Rare bunny id-" + theBuns.id.toString());
+        }
+        else if (totalChance < 0.001) {
+            curPrice *= 10;
+            log.info("Very rare bunny id-" + theBuns.id.toString());
+        }
+
+        return curPrice;
     }
 
     private static int GetTotalCarrots(BunnyObj buns) {
@@ -234,11 +248,11 @@ public class BunnyAPI {
         return carrotCount;
     }
     public static int GetBuyPrice(long bunnyId) {
-        BunnyObj theBuns = FetchById(bunnyId);
-        double totalChance = GetBunnyRareness(theBuns);
-        double basePrice = kBasePrice / totalChance;
-        double multiplier = Math.pow (2, theBuns.BunnySize - 1);
-        return (int)(basePrice * multiplier);
+       return GetSellPrice(bunnyId) * 2;
+    }
+
+    public static int GetBuyPrice(BunnyObj theBuns) {
+        return GetSellPrice(theBuns) * 2;
     }
 
 
