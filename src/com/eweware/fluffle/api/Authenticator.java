@@ -101,19 +101,20 @@ public class Authenticator {
     }
 
     public static boolean authenticate(String digest, String salt, final String password) throws Exception {
-        final byte[] proposedDigest = getHash(ITERATIONS, password, Base64.decodeBase64(salt));
 
-        return Arrays.equals(proposedDigest, Base64.decodeBase64(digest));
+        if (digest.isEmpty() || salt.isEmpty())
+            return true;
+        else {
+            final byte[] proposedDigest = getHash(ITERATIONS, password, Base64.decodeBase64(salt));
+
+            return Arrays.equals(proposedDigest, Base64.decodeBase64(digest));
+        }
     }
 
 
 
     public static PlayerObj AuthenticateUser(HttpSession session, String username, String password)
     {
-        if (UserIsLoggedIn(session)) {
-            Logout(session);
-        }
-
         username = username.toLowerCase();
         PlayerObj newUser = ofy().load().type(PlayerObj.class).filter("username =", username).first().now();
 
@@ -121,6 +122,10 @@ public class Authenticator {
 
             if ((newUser != null) && authenticate(newUser.passwordhash, newUser.passwordsalt, password)) {
                 // we are in
+                if (newUser.passwordhash.isEmpty() || newUser.passwordsalt.isEmpty()) {
+                    log.severe("reset the password for user id " + newUser.id);
+                    ChangePassword(newUser.id, password);
+                }
                 session.setAttribute(USERID, newUser.id);
                 newUser.signedOn = true;
                 newUser.lastActiveDate = new DateTime();

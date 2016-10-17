@@ -29,6 +29,7 @@ public class FluffleServerListener implements ServletContextListener {
         ObjectifyService.register(GameObj.class);
         ObjectifyService.register(PlayerObj.class);
         ObjectifyService.register(TossObj.class);
+        ObjectifyService.register(ReceiptObj.class);
 
         // Init our Game
         try {

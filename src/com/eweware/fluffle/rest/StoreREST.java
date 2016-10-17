@@ -64,6 +64,7 @@ public class StoreREST extends HttpServlet {
                         response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
 
                     } else {
+                        StoreAPI.RecordReceipt(curUserId, productId, storeId, theReceipt);
                         if (StoreAPI.ValidateReceipt(curUserId, storeId, theReceipt)) {
                             newCarrots = StoreAPI.AddCredit(curUserId, productId);
                             response.setStatus(HttpServletResponse.SC_OK);

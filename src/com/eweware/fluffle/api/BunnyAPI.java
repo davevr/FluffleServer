@@ -117,6 +117,18 @@ public class BunnyAPI {
         return totalChance;
     }
 
+    public static BunnyObj BreedBunnies(long momBunsId, long dadBunsId) {
+        BunnyObj momBuns = FetchById(momBunsId);
+        BunnyObj dadBuns = FetchById(dadBunsId);
+
+        if (momBuns != null && dadBuns != null) {
+            return BreedBunnies(momBuns, dadBuns);
+        } else {
+            log.severe("Attempt to breed bunnies with invalid IDs");
+            return null;
+        }
+    }
+
     public static BunnyObj BreedBunnies(BunnyObj momBuns, BunnyObj dadBuns) {
         BunnyObj babyBuns = null;
 

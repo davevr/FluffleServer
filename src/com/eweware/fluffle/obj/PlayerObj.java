@@ -23,6 +23,7 @@ public class PlayerObj {
     public Boolean signedOn;
     public Boolean isAdmin;
     public Boolean isBreeder;
+    public Boolean hasPurchased;
     public int totalBunnies;
     public int totalCarrotsFed;
     public int totalShares;

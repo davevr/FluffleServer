@@ -21,7 +21,35 @@ public class BunnyREST extends HttpServlet {
     private static final Logger log = Logger.getLogger(BunnyREST.class.getName());
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        long currentUserId = Authenticator.CurrentUserId(request.getSession());
 
+        if (currentUserId == 0) {
+            log.log(Level.SEVERE, "logged out user attempting to breed bunny");
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            return;
+        }
+
+        String momIdStr = request.getParameter("mom");
+        String dadIdStr = request.getParameter("dad");
+
+        if (momIdStr != null && dadIdStr != null) {
+            long momId = Long.parseLong(momIdStr);
+            long dadId = Long.parseLong(dadIdStr);
+
+            BunnyObj newBuns = BunnyAPI.BreedBunnies(momId, dadId);
+
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+            RestUtils.get_gson().toJson(newBuns, out);
+            out.flush();
+            out.close();
+
+
+        } else {
+            log.log(Level.SEVERE, "invalid mother and father bunnies");
+            response.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
