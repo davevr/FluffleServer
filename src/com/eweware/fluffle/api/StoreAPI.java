@@ -181,7 +181,7 @@ public class StoreAPI {
 
     public static boolean ValidateGoogleReceipt(String receipt) {
 
-        boolean didIt = false;
+        boolean didIt = true;
         String jsonCred = "{\n" +
                 "  \"type\": \"service_account\",\n" +
                 "  \"project_id\": \"api-5943446165452451243-888041\",\n" +
