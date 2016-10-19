@@ -3,6 +3,7 @@ package com.eweware.fluffle.api;
 import com.eweware.fluffle.obj.BunnyObj;
 import com.eweware.fluffle.obj.GoogleReceiptObj;
 import com.eweware.fluffle.obj.PlayerObj;
+import com.eweware.fluffle.obj.ReceiptObj;
 import com.eweware.fluffle.rest.RestUtils;
 import com.google.api.client.googleapis.auth.oauth2.GoogleCredential;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
@@ -12,6 +13,7 @@ import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.androidpublisher.AndroidPublisher;
 import com.google.api.services.androidpublisher.model.ProductPurchase;
+import org.joda.time.DateTime;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -66,6 +68,16 @@ public class StoreAPI {
         for (int i = 0; i < 10; i++) {
             BunnyAPI.MakeRandomBunny();
         }
+    }
+
+    public static void RecordReceipt(long curUserId, String productId, String storeId, String theReceipt) {
+        ReceiptObj newObj = new ReceiptObj();
+        newObj.playerId = curUserId;
+        newObj.productId = productId;
+        newObj.store = storeId;
+        newObj.receiptData = theReceipt;
+        newObj.purchaseDate = DateTime.now();
+        ofy().save().entity(newObj).now();
     }
 
     public static boolean ValidateReceipt(long userId, String storeName, String receipt) {
@@ -235,6 +247,7 @@ public class StoreAPI {
     public static int AddCredit(long userId, String productName) {
         PlayerObj thePlayer = PlayerAPI.FetchById(userId);
         int newCarrots = 0;
+        boolean hasPurchased = true;
 
         if (thePlayer == null)
         {
@@ -246,6 +259,7 @@ public class StoreAPI {
             switch (productName) {
                 case "video_ad":
                     carrotsToAdd = 50;
+                    hasPurchased = false;
                     break;
                 case "android.test.purchased":
                 case "com.eweware.fluffle.carrot01":
@@ -270,12 +284,17 @@ public class StoreAPI {
                     break;
                 default:
                     log.log(Level.SEVERE, "Invalid product specified!");
+                    hasPurchased = false;
                     break;
             }
 
             if (carrotsToAdd > 0) {
                 PlayerAPI.GiveCarrots(thePlayer, carrotsToAdd);
                 newCarrots = carrotsToAdd;
+                if (hasPurchased && thePlayer.hasPurchased == false) {
+                    thePlayer.hasPurchased = true;
+                    ofy().save().entity(thePlayer).now();
+                }
             }
 
         }
