@@ -99,7 +99,7 @@ public class PlayerAPI {
     public static void GiveBunny(PlayerObj thePlayer, BunnyObj theBuns) {
         thePlayer.totalBunnies++;
         theBuns.CurrentOwner = thePlayer.id;
-        if (theBuns.OriginalOwner == 0);
+        if (theBuns.OriginalOwner == null || theBuns.OriginalOwner == 0);
             theBuns.OriginalOwner = thePlayer.id;
         ofy().save().entity(theBuns).now();
         ofy().save().entity(thePlayer).now();

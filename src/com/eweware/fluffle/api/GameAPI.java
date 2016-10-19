@@ -38,9 +38,6 @@ public class GameAPI {
         return curGame.rnd;
     }
 
-    public static int getBreedChance() {
-        return curGame.BreedChance;
-    }
 
     public static List<Integer> getGrowthStages() {
         return curGame.GrowthStages;

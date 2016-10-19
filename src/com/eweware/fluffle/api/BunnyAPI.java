@@ -129,11 +129,22 @@ public class BunnyAPI {
         }
     }
 
+    public static int getBreedChance(BunnyObj momBuns, BunnyObj dadBuns) {
+        float chance = 0;
+
+        // the max breed chance is the size, 10% per size
+        // the actual breed chance is divided by the average happiness
+        float averageHappiness = (momBuns.Happiness + dadBuns.Happiness) / 2;
+        float maxChance = momBuns.BunnySize * 10;
+        chance = maxChance * (averageHappiness / 100);
+        return (int)chance;
+    }
+
     public static BunnyObj BreedBunnies(BunnyObj momBuns, BunnyObj dadBuns) {
         BunnyObj babyBuns = null;
 
         if (BunniesCanBreed(momBuns,dadBuns)) {
-            if (GameAPI.Rnd().nextInt(100) < GameAPI.getBreedChance()) {
+            if (GameAPI.Rnd().nextInt(100) < BunnyAPI.getBreedChance(momBuns, dadBuns)) {
                 // breed them!
                 babyBuns = new BunnyObj();
                 babyBuns.BreedID = momBuns.BreedID;
@@ -191,7 +202,7 @@ public class BunnyAPI {
             else if (theBuns.LastBred == null)
                 return true;    // buns has never bred...
             else {
-                int totalSeconds = Seconds.secondsBetween(DateTime.now(), theBuns.LastBred).getSeconds();
+                int totalSeconds = Seconds.secondsBetween(theBuns.LastBred, DateTime.now()).getSeconds();
                 if (totalSeconds > 86400)   // wait about a day
                     return true;
                 else {
