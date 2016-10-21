@@ -251,11 +251,17 @@ public class BunnyAPI {
 
         if (totalChance < .02) {
             curPrice *= 2;
-            log.info("Rare bunny id-" + theBuns.id.toString());
+            long id = 0;
+            if (theBuns.id != null)
+                id = theBuns.id;
+            log.info("Rare bunny id-" + id);
         }
         else if (totalChance < 0.001) {
             curPrice *= 10;
-            log.info("Very rare bunny id-" + theBuns.id.toString());
+            long id = 0;
+            if (theBuns.id != null)
+                id = theBuns.id;
+            log.info("Very rare bunny id-" + id);
         }
 
         return curPrice;
