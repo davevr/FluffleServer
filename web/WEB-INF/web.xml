@@ -151,6 +151,40 @@
         <url-pattern>/admin/players</url-pattern>
     </servlet-mapping>
 
+
+    <servlet>
+        <servlet-name>AdminBreedDetails</servlet-name>
+        <jsp-file>/adminsite/breeddetails.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminBreedDetails</servlet-name>
+        <url-pattern>/admin/breeddetails.jsp</url-pattern>
+    </servlet-mapping>
+
+
+    <servlet>
+        <servlet-name>AdminFurDetails</servlet-name>
+        <jsp-file>/adminsite/furdetails.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminFurDetails</servlet-name>
+        <url-pattern>/admin/furdetails.jsp</url-pattern>
+    </servlet-mapping>
+
+
+
+    <servlet>
+        <servlet-name>AdminEyeDetails</servlet-name>
+        <jsp-file>/adminsite/eyedetails.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AdminEyeDetails</servlet-name>
+        <url-pattern>/admin/eyedetails.jsp</url-pattern>
+    </servlet-mapping>
+
+
+
+
     <servlet>
         <servlet-name>AdminBreed</servlet-name>
         <jsp-file>/adminsite/breeds.jsp</jsp-file>
@@ -183,7 +217,15 @@
         <servlet-name>AdVerify</servlet-name>
         <servlet-class>com.eweware.fluffle.rest.AdVerify</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AdminUpdate</servlet-name>
+        <servlet-class>com.eweware.fluffle.admin.AdminUpdate</servlet-class>
+    </servlet>
 
+    <servlet-mapping>
+        <servlet-name>AdminUpdate</servlet-name>
+        <url-pattern>api/v1/admin/update</url-pattern>
+    </servlet-mapping>
 
     <servlet-mapping>
         <servlet-name>AdVerify</servlet-name>

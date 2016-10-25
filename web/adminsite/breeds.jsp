@@ -5,7 +5,8 @@
 <%@ page import="com.eweware.fluffle.obj.BunnyObj" %>
 <%@ page import="static com.googlecode.objectify.ObjectifyService.ofy" %>
 <%@ page import="com.googlecode.objectify.cmd.Query" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%--
   Created by IntelliJ IDEA.
   User: Dave
   Date: 6/1/2016
@@ -53,7 +54,7 @@
 
         %>
         <tr>
-            <td><%= curBreed.id.toString() %></td>
+            <td><a href="breeddetails.jsp?breedid=<%=curBreed.id.toString()%>"><%= curBreed.id.toString() %></a></td>
             <td><%= curBreed.BreedName%></td>
             <td><%= curBreed.rarity %></td>
 
