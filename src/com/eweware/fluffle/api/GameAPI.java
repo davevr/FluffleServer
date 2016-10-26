@@ -56,7 +56,7 @@ public class GameAPI {
     }
 
     public static void UpdateBreeds() {
-        // todo - reload bunny breeds
+        curGame.BunnyBreeds = BunnyBreedAPI.FetchAll();
     }
 
     private static void InitFirstGame() {

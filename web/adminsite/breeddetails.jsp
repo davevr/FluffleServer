@@ -45,19 +45,40 @@
     function handleclick(theLine) {
         var tr = $("tr[data-furid='" + theLine + "']");
         tr.css("background-color","red");
-        var colorName = tr.find("input[name='furcolorname']");
+        var furname = tr.find("input[name='furcolorname']");
         var rarity =  tr.find("input[name='furcolorrarity']");
-        $.post("../api/v1/admin/update", { type: "furcolor", id: theLine, name: colorName.val(), rarity: rarity.val(), function(result) {
-            tr.css("background-color","white");
-        }})
+
+        $.ajax({
+            type: "PUT",
+            url: "../api/v1/admin/update?type=furcolor&name=" + furname.val() + "&id=" + theLine + "&rarity=" + rarity.val(),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            timeout: 3000,
+            success: function (result, didIt, status) {
+                tr.css("background-color","white");
+            },
+            error: function (theErr) {
+            }
+        });
     }
 
     function handledelete(theLine) {
         var tr = $("tr[data-furid='" + theLine + "']");
-        tr.remove();
+        $.ajax({
+            type: "DELETE",
+            url: "../api/v1/admin/update?type=furcolor&id=" + theLine,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            timeout: 3000,
+            success: function (result, didIt, status) {
+                tr.remove();
+            },
+            error: function (theErr) {
+            }
+        });
     }
 
-    function handlenewfurcolor() {
+    function handlenewfurcolor(breedId) {
 
     }
 </script>
@@ -73,6 +94,7 @@
             <td>Id</td>
             <td>Name</td>
             <td>rarity</td>
+            <td>image</td>
             <td>save</td>
             <td>delete</td>
         </tr>
@@ -86,10 +108,10 @@
         <tr data-furid="<%=curColor.id%>">
             <td><a href="furdetails.jsp?furid=<%=curColor.id.toString()%>"><%= curColor.id.toString() %></a></td>
             <td><input type="text" name="furcolorname" value="<%= curColor.ColorName%>"></td>
-                <td><input type="text" name="furcolorrarity" value="<%= curColor.rarity%>"></td>
-                <td><button onclick="handleclick(<%=curColor.id%>)">Submit</button></td>
-                <td><button onclick="handledelete(<%=curColor.id%>)">Delete</button></td>
-            </form>
+            <td><input type="text" name="furcolorrarity" value="<%= curColor.rarity%>"></td>
+            <td><img width="64" height="64" src="../images/profiles/minilop_<%=curColor.ColorName.toLowerCase()%>_<%=curColor.possibleEyeColors.get(0).ColorName.toLowerCase()%>.png"></td>
+            <td><button onclick="handleclick(<%=curColor.id%>)">Submit</button></td>
+            <td><button onclick="handledelete(<%=curColor.id%>)">Delete</button></td>
         </tr>
         <%
             }
@@ -98,7 +120,7 @@
         </tbody>
     </table>
     <div>
-        <button onclikc="handlenewfurcolor()">Add New Fur Color</button>
+        <button onclick="handlenewfurcolor(<%=theBreed.id%>)">Add New Fur Color</button>
     </div>
 </div>
 <%

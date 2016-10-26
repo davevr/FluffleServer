@@ -6,6 +6,8 @@
   <static-files>
     <include path="/images/**.png"></include>
     <include path="/pages/**.*"></include>
+    <include path="/css/**.*"></include>
+    <include path="/scripts/**.js"></include>
   </static-files>
 
 
