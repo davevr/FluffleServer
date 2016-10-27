@@ -37,7 +37,7 @@
 </head>
 <body>
 
-<script src="../scripts/jquery-2.1.0.min.js" type="text/javascript"></script>
+<script src="../scripts/jquery-3.1.1.min.js" type="text/javascript"></script>
 <script>
 
     function handleclick(theLine) {

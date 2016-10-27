@@ -21,7 +21,7 @@
 <!--
 <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
 -->
-<script src="../scripts/jquery-2.1.0.min.js" type="text/javascript"></script>
+<script src="../scripts/jquery-3.1.1.min.js" type="text/javascript"></script>
 <script>
 
     function handleclick(theLine) {
