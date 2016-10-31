@@ -1,5 +1,6 @@
 package com.eweware.fluffle.obj;
 
+import com.googlecode.objectify.Ref;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
@@ -15,6 +16,7 @@ public class BunnyEyeColorObj {
     public Long id;
     public String ColorName;
     public int rarity;
+    public transient long parentFurColorId;
 
     public BunnyEyeColorObj(String theColor, int chance) {
         ColorName = theColor;

@@ -2,6 +2,7 @@ package com.eweware.fluffle.api;
 
 import com.eweware.fluffle.obj.*;
 import com.googlecode.objectify.Key;
+import com.googlecode.objectify.Ref;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +16,11 @@ public class BunnyBreedAPI {
 
     public static BunnyBreedObj FetchById(long theId) {
         final BunnyBreedObj foundItem = ofy().load().key(Key.create(BunnyBreedObj.class, theId)).now();
+
+        // load in the various subnodes
+        List<BunnyFurColorObj> furList = BunnyFurColorAPI.FetchForBreed(foundItem.id);
+
+        foundItem.possibleFurColors = furList;
 
         return foundItem;
     }
@@ -66,12 +72,25 @@ public class BunnyBreedAPI {
 
 
     public static void AddFurColor (BunnyBreedObj theBreed, BunnyFurColorObj newColor) {
+        newColor.parentBreedId = theBreed.id;
+        ofy().save().entity(newColor).now();
         if (theBreed.possibleFurColors == null)
             theBreed.possibleFurColors = new ArrayList<BunnyFurColorObj>();
         theBreed.possibleFurColors.add(newColor);
     }
 
     public static List<BunnyBreedObj> FetchAll() {
-        return ofy().load().type(BunnyBreedObj.class).list();
+
+        List<BunnyBreedObj> breedList = ofy().load().type(BunnyBreedObj.class).list();
+
+        for (BunnyBreedObj curBreed : breedList) {
+            List<BunnyFurColorObj> furList = BunnyFurColorAPI.FetchForBreed(curBreed.id);
+
+
+
+            curBreed.possibleFurColors = furList;
+        }
+
+        return breedList;
     }
 }

@@ -82,7 +82,7 @@ public class GameAPI {
             BunnyFurColorAPI.AddNewEyeColor(newFurColor,"black", 500);
             BunnyFurColorAPI.AddNewEyeColor(newFurColor, "blue", 100);
             BunnyFurColorAPI.AddNewEyeColor(newFurColor, "red", 50);
-            ofy().save().entity(newFurColor).now();
+
             BunnyBreedAPI.AddFurColor(newBreed, newFurColor);
 
             newFurColor = new BunnyFurColorObj("tan",500);
@@ -125,7 +125,7 @@ public class GameAPI {
             ofy().save().entity(newBreed);
 
 
-            // holland lop
+            // Flemish Giant
             newBreed = new BunnyBreedObj("Flemish Giant", 100);
 
             newFurColor = new BunnyFurColorObj("brown", 500);

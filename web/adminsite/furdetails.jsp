@@ -65,8 +65,7 @@
         var tr = $("tr[data-eyeid='" + theLine + "']");
         $.ajax({
             type: "DELETE",
-            url: "../api/v1/admin/update?type=eyecolor&id=" + theLine,
-            contentType: "application/json; charset=utf-8",
+            url: "../api/v1/admin/update?type=eyecolor&id=" + theLine + "&furcolorid=<%=furIdStr%>",
             dataType: "json",
             timeout: 3000,
             success: function (result, didIt, status) {
@@ -80,19 +79,21 @@
 
     function handleneweyecolor() {
         var newColor = window.prompt("Name of new eye color");
-        $.ajax({
-            type: "POST",
-            url: "../api/v1/admin/update?type=eyecolor&name=" + newColor,
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            timeout: 3000,
-            success: function (result, didIt, status) {
-                console.log(result.toString());
+        if (newColor != null) {
+            $.ajax({
+                type: "POST",
+                url: "../api/v1/admin/update?type=eyecolor&name=" + newColor + "&furcolorid=<%=furIdStr%>",,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                timeout: 3000,
+                success: function (result, didIt, status) {
+                    console.log(result.toString());
 
-            },
-            error: function (theErr) {
-            }
-        });
+                },
+                error: function (theErr) {
+                }
+            });
+        }
     }
 </script>
 
@@ -116,19 +117,27 @@
         <tbody>
 
         <%
-            for (BunnyEyeColorObj curColor : theFur.possibleEyeColors) {
+            if (theFur.possibleEyeColors != null) {
+                for (BunnyEyeColorObj curColor : theFur.possibleEyeColors) {
 
         %>
         <tr data-eyeid="<%=curColor.id%>">
             <td><a href="eyedetails.jsp?eyecolorid=<%=curColor.id.toString()%>"><%= curColor.id.toString() %></a></td>
             <td><input type="text" name="eyecolorname" value="<%= curColor.ColorName%>"></td>
             <td><input type="text" name="eyecolorrarity" value="<%= curColor.rarity%>"></td>
+            <%
+                if (theFur.ColorName != null && curColor.ColorName != null) {
+            %>
             <td><img width="64" height="64" src="../images/profiles/minilop_<%=theFur.ColorName.toLowerCase()%>_<%=curColor.ColorName.toLowerCase()%>.png"></td>
+            <% } else  { %>
+            <td><span>none</span></td>
+            <% } %>
             <td><button onclick="handleclick(<%=curColor.id%>)">Submit</button></td>
             <td><button onclick="handledelete(<%=curColor.id%>)">Delete</button></td>
 
         </tr>
         <%
+                }
             }
         %>
         </tbody>

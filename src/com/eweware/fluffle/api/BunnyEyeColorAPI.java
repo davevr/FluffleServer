@@ -1,6 +1,7 @@
 package com.eweware.fluffle.api;
 
 import com.eweware.fluffle.obj.BunnyEyeColorObj;
+import com.eweware.fluffle.obj.BunnyFurColorObj;
 import com.googlecode.objectify.Key;
 
 import java.util.List;
@@ -17,6 +18,13 @@ public class BunnyEyeColorAPI {
 
         return foundItem;
     }
+
+    public static List<BunnyEyeColorObj> FetchForFurColor(long breedId) {
+        List<BunnyEyeColorObj> eyeColors = ofy().load().type(BunnyEyeColorObj.class).filter("parentFurColorId =", breedId).list();
+
+        return eyeColors;
+    }
+
 
     public static List<BunnyEyeColorObj> FetchAll() {
         return ofy().load().type(BunnyEyeColorObj.class).list();

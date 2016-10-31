@@ -20,6 +20,12 @@ public class BunnyFurColorAPI {
     public static BunnyFurColorObj FetchById(long theId) {
         final BunnyFurColorObj foundItem = ofy().load().key(Key.create(BunnyFurColorObj.class, theId)).now();
 
+        if (foundItem != null) {
+            List<BunnyEyeColorObj> eyeColors = BunnyEyeColorAPI.FetchForFurColor(foundItem.id);
+
+            foundItem.possibleEyeColors = eyeColors;
+        }
+
         return foundItem;
     }
 
@@ -52,10 +58,25 @@ public class BunnyFurColorAPI {
 
     public static void AddNewEyeColor (BunnyFurColorObj theFurColor, String eyeColor, int chance) {
         BunnyEyeColorObj    newColor = new BunnyEyeColorObj(eyeColor, chance);
+        newColor.parentFurColorId = theFurColor.id;
         ofy().save().entity(newColor).now();
         if (theFurColor.possibleEyeColors == null)
             theFurColor.possibleEyeColors = new ArrayList<BunnyEyeColorObj>();
         theFurColor.possibleEyeColors.add(newColor);
+    }
+
+    public static List<BunnyFurColorObj> FetchForBreed(long breedId) {
+        List<BunnyFurColorObj> furColors = ofy().load().type(BunnyFurColorObj.class).filter("parentBreedId =", breedId).list();
+
+        if (furColors != null) {
+            for (BunnyFurColorObj curColor : furColors) {
+                List<BunnyEyeColorObj> eyeColors = BunnyEyeColorAPI.FetchForFurColor(curColor.id);
+
+                curColor.possibleEyeColors = eyeColors;
+            }
+        }
+
+        return furColors;
     }
 
     public static double GetEyeColorChance(long furColorId, long eyecolorId) {

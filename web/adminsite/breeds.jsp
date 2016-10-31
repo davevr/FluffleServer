@@ -63,17 +63,43 @@
 
     function handlenewbreed() {
         var newBreed = window.prompt("Name of new breed");
+        if (newBreed != null) {
+            $.ajax({
+                type: "POST",
+                url: "../api/v1/admin/update?type=breed&name=" + newBreed,
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                timeout: 3000,
+                success: function (result, didIt, status) {
+                    var curBreed = result;
+                    var newHTML = '<tr data-breedid="' + curBreed.id + '">';
+                    newHTML += '<td><a href="breeddetails.jsp?breedid=' + curBreed.id + '">' + curBreed.id + '></a></td>';
+                    newHTML += '<td><input type="text" name="breedname" value="' + curBreed.BreedName + '"></td>';
+                    newHTML += '<td><input type="text" name="breedrarity" value="' + curBreed.rarity + '"></td>';
+                    newHTML += '<td><span>none</span></td>';
+                    newHTML += '<td><button onclick="handleclick(' + curBreed.id + ')">Submit</button></td>';
+                    newHTML += '<td><button onclick="handledelete(' + curBreed.id + ')">Delete</button></td>';
+                    newHTML += '</tr>';
+                    $("tbody").append(newHTML);
+                },
+                error: function (theErr) {
+                }
+            });
+        }
+    }
+
+    function handlerecompute() {
         $.ajax({
             type: "POST",
-            url: "../api/v1/admin/update?type=breed&name=" + newBreed,
+            url: "../api/v1/admin/update?type=remap",
             contentType: "application/json; charset=utf-8",
             dataType: "json",
             timeout: 3000,
             success: function (result, didIt, status) {
-                console.log(result.toString());
-
+                console.log("remapped!");
             },
             error: function (theErr) {
+                console.log("remap failed");
             }
         });
     }
@@ -144,6 +170,7 @@
     </table>
     <div>
         <button onclick="handlenewbreed()">Add New Breed</button>
+        <button onclick="handlerecompute()">Recompute Color Model</button>
     </div>
 </div>
 <%
