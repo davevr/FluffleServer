@@ -25,7 +25,8 @@
         isAdmin = thePlayer.isAdmin == null ? false : thePlayer.isAdmin;
     }
 
-    if (isAdmin && breedId != -1) {
+    if (isAdmin ) {
+
         BunnyBreedObj theBreed = BunnyBreedAPI.FetchById(breedId);
 
 %>
@@ -92,6 +93,7 @@
                     newHTML += '<td><input type="text" name="furcolorname" value="' + curFur.ColorName + '"></td>';
                     newHTML += '<td><input type="text" name="furcolorrarity" value="' + curFur.rarity + '"></td>';
                     newHTML += '<td><span>none</span></td>';
+                    newHTML += '<td><span>0</span></td>';
                     newHTML += '<td><button onclick="handleclick(' + curFur.id + ')">Submit</button></td>';
                     newHTML += '<td><button onclick="handledelete(' + curFur.id + ')">Delete</button></td>';
                     newHTML += '</tr>';
@@ -117,6 +119,7 @@
             <td>Name</td>
             <td>rarity</td>
             <td>image</td>
+            <td>count</td>
             <td>save</td>
             <td>delete</td>
         </tr>
@@ -133,7 +136,7 @@
             <td><input type="text" name="furcolorrarity" value="<%= curColor.rarity%>"></td>
             <%
                 BunnyEyeColorObj curEye = null;
-                if (curColor.possibleEyeColors != null)
+                if (curColor.possibleEyeColors != null && curColor.possibleEyeColors.size() > 0)
                     curEye = curColor.possibleEyeColors.get(0);
 
                 if (curEye != null && curColor.ColorName != null) {
@@ -142,6 +145,7 @@
             <% } else  { %>
             <td><span>none</span></td>
             <% } %>
+            <td><%=ofy().load().type(BunnyObj.class).filter("FurColorID =", curColor.id).count()%></td>
             <td><button onclick="handleclick(<%=curColor.id%>)">Submit</button></td>
             <td><button onclick="handledelete(<%=curColor.id%>)">Delete</button></td>
         </tr>

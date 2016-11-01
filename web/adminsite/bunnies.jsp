@@ -31,6 +31,19 @@
     }
 
     if (isAdmin) {
+        String breedIdStr = request.getParameter("breedid");
+        long breedId = -1;
+        if (breedIdStr != null)
+            breedId = Long.parseLong(breedIdStr);
+        String furColorIdStr = request.getParameter("furcolorid");
+        long furColorId = -1;
+        if (furColorIdStr != null)
+            furColorId = Long.parseLong(furColorIdStr);
+        String eyeColorIdStr = request.getParameter("eyecolorid");
+        long eyeColorId = -1;
+        if (eyeColorIdStr != null)
+            eyeColorId = Long.parseLong(eyeColorIdStr);
+
 %>
 <h2>Here you can create bunnies, give them to players, see ownership and history, etc.</h2>
 <div>
@@ -46,15 +59,24 @@
                 <td>Breed</td>
                 <td>Fur Color</td>
                 <td>Eye Color</td>
+                <td>Breed ID</td>
+                <td>Fur Color ID</td>
+                <td>Eye Color ID</td>
             </tr>
         </thead>
         <tbody>
 
             <%
-                Query<BunnyObj> query = ofy().load().type(BunnyObj.class).limit(100);
+                Query<BunnyObj> query = ofy().load().type(BunnyObj.class);
+                if (breedId != -1)
+                    query = query.filter("BreedID =", breedId);
+                if (furColorId != -1)
+                    query = query.filter("FurColorID =", furColorId);
+                if (eyeColorId != -1)
+                    query = query.filter("EyeColorID =", furColorId);
 
                 //query = query.startAt(Cursor.fromWebSafeString(cursorString));
-                List<BunnyObj> bunList = query.list();
+                List<BunnyObj> bunList = query.limit(1000).list();
 
                 for(BunnyObj curBuns : bunList) {
 
@@ -69,6 +91,9 @@
             <td><%= curBuns.BreedName %></td>
             <td><%= curBuns.FurColorName %></td>
             <td><%= curBuns.EyeColorName %></td>
+            <td><%= curBuns.BreedID %></td>
+            <td><%= curBuns.FurColorID %></td>
+            <td><%= curBuns.EyeColorID %></td>
         </tr>
         <%
             }

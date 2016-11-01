@@ -19,14 +19,15 @@ public class BunnyEyeColorAPI {
         return foundItem;
     }
 
-    public static List<BunnyEyeColorObj> FetchForFurColor(long breedId) {
-        List<BunnyEyeColorObj> eyeColors = ofy().load().type(BunnyEyeColorObj.class).filter("parentFurColorId =", breedId).list();
+    public static List<BunnyEyeColorObj> FetchForFurColor(long furColorId) {
+        List<BunnyEyeColorObj> eyeColors = ofy().load().type(BunnyEyeColorObj.class).filter("parentFurColorId =", furColorId).list();
 
         return eyeColors;
     }
 
 
     public static List<BunnyEyeColorObj> FetchAll() {
+
         return ofy().load().type(BunnyEyeColorObj.class).list();
     }
 }

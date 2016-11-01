@@ -73,6 +73,20 @@ public class AdminUpdate extends HttpServlet {
                 out.close();
             } else if (typeStr.equals("remap")) {
                 UpdateColorDataModel();
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentType("application/json");
+                PrintWriter out = response.getWriter();
+                RestUtils.get_gson().toJson(true, out);
+                out.flush();
+                out.close();
+            } else if (typeStr.equals("repair")) {
+                didIt = RepairDataModel();
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentType("application/json");
+                PrintWriter out = response.getWriter();
+                RestUtils.get_gson().toJson(didIt, out);
+                out.flush();
+                out.close();
             } else {
                 log.severe("Unknown create type - " + typeStr);
             }
@@ -295,7 +309,26 @@ public class AdminUpdate extends HttpServlet {
                 RemapFurColors(curBreed);
             }
         }
+
+
+
+        GameAPI.UpdateBreeds();
     }
+
+    private boolean RepairDataModel() {
+        List<BunnyObj> bunList = ofy().load().type(BunnyObj.class).list();
+
+        for (BunnyObj curBuns : bunList) {
+            RepairBunny(curBuns);
+        }
+
+        return true;
+    }
+
+    private void RepairBunny(BunnyObj curBuns) {
+
+    }
+
 
     private void RemapFurColors(BunnyBreedObj curBreed) {
         if (curBreed.possibleFurColors.size() > 0) {
@@ -338,7 +371,7 @@ public class AdminUpdate extends HttpServlet {
             BunnyEyeColorObj newEye = new BunnyEyeColorObj();
             newEye.ColorName = curEye.ColorName;
             newEye.rarity = curEye.rarity;
-            newEye.parentFurColorId = curFurColor.id;
+            newEye.parentFurColorId = newColorId;
             ofy().save().entity(newEye).now();
             eyeIdMap.put(curEye.id, newEye);
         }

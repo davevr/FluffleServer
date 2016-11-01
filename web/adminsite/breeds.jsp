@@ -77,6 +77,7 @@
                     newHTML += '<td><input type="text" name="breedname" value="' + curBreed.BreedName + '"></td>';
                     newHTML += '<td><input type="text" name="breedrarity" value="' + curBreed.rarity + '"></td>';
                     newHTML += '<td><span>none</span></td>';
+                    newHTML += '<td><span>0</span></td>';
                     newHTML += '<td><button onclick="handleclick(' + curBreed.id + ')">Submit</button></td>';
                     newHTML += '<td><button onclick="handledelete(' + curBreed.id + ')">Delete</button></td>';
                     newHTML += '</tr>';
@@ -103,6 +104,23 @@
             }
         });
     }
+
+    function handlerepair() {
+        $.ajax({
+            type: "POST",
+            url: "../api/v1/admin/update?type=repair",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            timeout: 3000,
+            success: function (result, didIt, status) {
+                console.log("repaired!!");
+            },
+            error: function (theErr) {
+                console.log("repair failed");
+            }
+        });
+    }
+
 </script>
 
 <h1>OK here is where you can admin the breeds of rabbits.  </h1>
@@ -126,6 +144,7 @@
             <td>Name</td>
             <td>rarity</td>
             <td>image</td>
+            <td>count</td>
             <td>save</td>
             <td>delete</td>
         </tr>
@@ -147,9 +166,9 @@
             <%
                 BunnyFurColorObj curFur = null;
                 BunnyEyeColorObj curEye = null;
-                if (curBreed.possibleFurColors != null)
+                if (curBreed.possibleFurColors != null && curBreed.possibleFurColors.size() != 0)
                     curFur = curBreed.possibleFurColors.get(0);
-                if (curFur != null && curFur.possibleEyeColors != null)
+                if (curFur != null && curFur.possibleEyeColors != null && curFur.possibleEyeColors.size() != 0)
                     curEye = curFur.possibleEyeColors.get(0);
 
               if (curFur != null && curEye != null) {
@@ -158,6 +177,7 @@
             <% } else  { %>
             <td><span>none</span></td>
             <% } %>
+            <td><a href="bunnies.jsp?breedid=<%=curBreed.id.toString()%>"><%=ofy().load().type(BunnyObj.class).filter("BreedID =", curBreed.id).count()%></a></td>
             <td><button onclick="handleclick(<%=curBreed.id%>)">Submit</button></td>
             <td><button onclick="handledelete(<%=curBreed.id%>)">Delete</button></td>
 
@@ -171,6 +191,7 @@
     <div>
         <button onclick="handlenewbreed()">Add New Breed</button>
         <button onclick="handlerecompute()">Recompute Color Model</button>
+        <button onclick="handlerepair()">Repair Color Model</button>
     </div>
 </div>
 <%

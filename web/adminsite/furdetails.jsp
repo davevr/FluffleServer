@@ -110,6 +110,7 @@
             <td>Name</td>
             <td>rarity</td>
             <td>image</td>
+            <td>count</td>
             <td>save</td>
             <td>delete</td>
         </tr>
@@ -132,6 +133,7 @@
             <% } else  { %>
             <td><span>none</span></td>
             <% } %>
+            <td><%=ofy().load().type(BunnyObj.class).filter("EyeColorID =", curColor.id).count()%></td>
             <td><button onclick="handleclick(<%=curColor.id%>)">Submit</button></td>
             <td><button onclick="handledelete(<%=curColor.id%>)">Delete</button></td>
 
