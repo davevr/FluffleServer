@@ -82,18 +82,44 @@
         if (newColor != null) {
             $.ajax({
                 type: "POST",
-                url: "../api/v1/admin/update?type=eyecolor&name=" + newColor + "&furcolorid=<%=furIdStr%>",,
+                url: "../api/v1/admin/update?type=eyecolor&name=" + newColor + "&furcolorid=<%=furIdStr%>",
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 timeout: 3000,
                 success: function (result, didIt, status) {
-                    console.log(result.toString());
+                    var curColor = result;
+                    let newHTML = '<tr data-eyeid="' + curColor.id + '">';
+                    newHTML += '<td><a href="eyedetails.jsp?eyecolorid=' + curColor.id + '">' + curColor.id + '</a></td>';
+                    newHTML += '<td><input type="text" name="eyecolorname" value="' + curColor.ColorName + '"></td>';
+                    newHTML += '<td><input type="text" name="eyecolorrarity" value="' + curColor.rarity + '"></td>';
+                    newHTML += '<td><img width="64" height="64" src="../images/profiles/minilop_<%=theFur.ColorName.toLowerCase()%>_' + curColor.ColorName.toLowerCase() + '.png"></td>';
+                    newHTML += '<td><span>0</span></td>';
+                    newHTML += '<td><button onclick="handleclick(' + curColor.id + ')">Submit</button></td>';
+                    newHTML += '<td><button onclick="handledelete(' + curColor.id + ')">Delete</button></td>';
+                    newHTML += '<td><button onclick="handleaddtostore(' + curColor.id + ')">add</button></td>';
+                    newHTML += '</tr>';
 
+                    $("tbody").append(newHTML);
                 },
                 error: function (theErr) {
                 }
             });
         }
+    }
+
+    function handleaddtostore(theLine) {
+        $.ajax({
+            type: "POST",
+            url: "../api/v1/admin/update?type=store&eyecolorid=" + theLine + "&furcolorid=<%=furIdStr%>",
+            dataType: "json",
+            timeout: 3000,
+            success: function (result, didIt, status) {
+                tr.remove();
+            },
+            error: function (theErr) {
+            }
+        });
+
     }
 </script>
 
@@ -113,6 +139,7 @@
             <td>count</td>
             <td>save</td>
             <td>delete</td>
+            <td>add to store</td>
         </tr>
         </thead>
         <tbody>
@@ -136,7 +163,7 @@
             <td><%=ofy().load().type(BunnyObj.class).filter("EyeColorID =", curColor.id).count()%></td>
             <td><button onclick="handleclick(<%=curColor.id%>)">Submit</button></td>
             <td><button onclick="handledelete(<%=curColor.id%>)">Delete</button></td>
-
+            <td><button onclick="handleaddtostore(<%=curColor.id%>)">Add</button></td>
         </tr>
         <%
                 }
@@ -145,7 +172,7 @@
         </tbody>
     </table>
     <div>
-        <button onclick="handleneweyeColor()">Add New Eye Color</button>
+        <button onclick="handleneweyecolor()">Add New Eye Color</button>
     </div>
 </div>
 <%

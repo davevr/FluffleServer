@@ -80,6 +80,18 @@ public class BunnyAPI {
 
 
     public static BunnyObj MakeRandomBunny() {
+
+
+        BunnyBreedObj newBreed = GameAPI.GetRandomBreed();
+
+        BunnyFurColorObj newFurColor = BunnyBreedAPI.GetRandomFurColor(newBreed);
+
+        BunnyEyeColorObj newEyeColor = BunnyFurColorAPI.GetRandomEyeColor(newFurColor);
+
+        return MakeBunny(newEyeColor.id);
+    }
+
+    public static BunnyObj MakeBunny(long eyeColorId) {
         BunnyObj newBuns = new BunnyObj ();
         double totalChance = 1;
 
@@ -88,17 +100,17 @@ public class BunnyAPI {
         newBuns.TotalShares = 0;
         newBuns.Female = GameAPI.Rnd().nextBoolean();
 
-        BunnyBreedObj newBreed = GameAPI.GetRandomBreed();
-        newBuns.BreedID = newBreed.id;
-        newBuns.BreedName = newBreed.BreedName;
+        BunnyEyeColorObj newEyeColor = BunnyEyeColorAPI.FetchById(eyeColorId);
+        newBuns.EyeColorID = newEyeColor.id;
+        newBuns.EyeColorName = newEyeColor.ColorName;
 
-        BunnyFurColorObj newFurColor = BunnyBreedAPI.GetRandomFurColor(newBreed);
+        BunnyFurColorObj newFurColor = BunnyFurColorAPI.FetchById(newEyeColor.parentFurColorId);
         newBuns.FurColorID = newFurColor.id;
         newBuns.FurColorName = newFurColor.ColorName;
 
-        BunnyEyeColorObj newEyeColor = BunnyFurColorAPI.GetRandomEyeColor(newFurColor);
-        newBuns.EyeColorID = newEyeColor.id;
-        newBuns.EyeColorName = newEyeColor.ColorName;
+        BunnyBreedObj newBreed = BunnyBreedAPI.FetchById(newFurColor.parentBreedId);
+        newBuns.BreedID = newBreed.id;
+        newBuns.BreedName = newBreed.BreedName;
 
         newBuns.BunnySize = 1;
         newBuns.Price = GetSellPrice(newBuns);

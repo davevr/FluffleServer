@@ -87,6 +87,16 @@ public class AdminUpdate extends HttpServlet {
                 RestUtils.get_gson().toJson(didIt, out);
                 out.flush();
                 out.close();
+            } else if (typeStr.equals("store")) {
+                String eyeColorIdStr = request.getParameter("eyecolorid");
+                long eyeColorId = Long.parseLong(eyeColorIdStr);
+                BunnyObj newBuns = BunnyAPI.MakeBunny(eyeColorId);
+                response.setStatus(HttpServletResponse.SC_OK);
+                response.setContentType("application/json");
+                PrintWriter out = response.getWriter();
+                RestUtils.get_gson().toJson(newBuns, out);
+                out.flush();
+                out.close();
             } else {
                 log.severe("Unknown create type - " + typeStr);
             }
@@ -326,6 +336,18 @@ public class AdminUpdate extends HttpServlet {
     }
 
     private void RepairBunny(BunnyObj curBuns) {
+        BunnyBreedObj curBreed = GameAPI.GetBreedByName(curBuns.BreedName);
+        BunnyFurColorObj curFurColor = GameAPI.GetBreedFurColorByName(curBreed, curBuns.FurColorName);
+        BunnyEyeColorObj curEyeColor = GameAPI.GetFurEyeColorByName(curFurColor, curBuns.EyeColorName);
+
+        if (curBreed != null)
+            curBuns.BreedID = curBreed.id;
+        if (curFurColor != null)
+            curBuns.FurColorID = curFurColor.id;
+        if (curEyeColor != null)
+            curBuns.EyeColorID = curEyeColor.id;
+
+        ofy().save().entities(curBuns).now();
 
     }
 
@@ -345,23 +367,6 @@ public class AdminUpdate extends HttpServlet {
                     RemapEyeColors(curFur, newFur.id, eyeIdMap);
                 }
                 furIdMap.put(curFur.id, newFur);
-            }
-
-            // now remap all of the bunnies
-            List<BunnyObj> bunnyObjs = ofy().load().type(BunnyObj.class).filter("BreedID =", curBreed.id).list();
-            for (BunnyObj curBuns : bunnyObjs) {
-                BunnyFurColorObj newFurMap = furIdMap.get(curBuns.FurColorID);
-                BunnyEyeColorObj newEyeMap = eyeIdMap.get(curBuns.EyeColorID);
-                if (newFurMap != null) {
-                    curBuns.FurColorID = newFurMap.id;
-                    curBuns.FurColorName = newFurMap.ColorName;
-
-                }
-                if (newEyeMap != null) {
-                    curBuns.EyeColorName = newEyeMap.ColorName;
-                    curBuns.EyeColorID = newEyeMap.id;
-                }
-                ofy().save().entity(curBuns).now();
             }
         }
     }

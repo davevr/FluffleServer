@@ -34,6 +34,45 @@ public class GameAPI {
         }
     }
 
+    public static BunnyBreedObj  GetBreedByName(String breedName) {
+        BunnyBreedObj theBreed = null;
+
+        for (BunnyBreedObj curBreed : curGame.BunnyBreeds) {
+            if (curBreed.BreedName.equals(breedName)) {
+                theBreed = curBreed;
+                break;
+            }
+        }
+
+        return theBreed;
+    }
+
+    public static BunnyFurColorObj  GetBreedFurColorByName(BunnyBreedObj theBreed, String furColorName) {
+        BunnyFurColorObj theFurColor = null;
+
+        for (BunnyFurColorObj curFurColor : theBreed.possibleFurColors) {
+            if (curFurColor.ColorName.equals(furColorName)) {
+                theFurColor = curFurColor;
+                break;
+            }
+        }
+
+        return theFurColor;
+    }
+
+    public static BunnyEyeColorObj  GetFurEyeColorByName(BunnyFurColorObj theFurColor, String eyeColorName) {
+        BunnyEyeColorObj theEyeColor = null;
+
+        for (BunnyEyeColorObj curEyeColor : theFurColor.possibleEyeColors) {
+            if (curEyeColor.ColorName.equals(eyeColorName)) {
+                theEyeColor = curEyeColor;
+                break;
+            }
+        }
+
+        return theEyeColor;
+    }
+
     public static Random Rnd() {
         return curGame.rnd;
     }

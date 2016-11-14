@@ -69,7 +69,7 @@
   </table>
 
   <p>Fluffle is the fun and easy game where you can buy, feed, grow, breed, and collect bunnies. You can also trade them with your friends!</p>
-  <p>Fluffle is designed by Juliet, a 9 year old girl who loves bunnies.</p>
+  <p>Fluffle is designed by Juliet, a 10 year old girl who loves bunnies.</p>
   <p>Fluffle is available now on iOS and Android!</p>
 <p></p>
 
